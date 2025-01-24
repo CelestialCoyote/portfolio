@@ -1,0 +1,117 @@
+[
+    {
+        "category": "Programming Languages",
+        "items": [
+            {
+                "title": "JavaScript",
+                "src": "/images/tech-icons/javascript.svg",
+                "alt": "javascript-icon"
+            },
+            {
+                "title": "TypeScript",
+                "src": "/images/tech-icons/typescript.svg",
+                "alt": "typescript-icon"
+            },
+            {
+                "title": "Python",
+                "src": "/images/tech-icons/python.svg",
+                "alt": "python-icon"
+            },
+            {
+                "title": "C#",
+                "src": "/images/tech-icons/csharp.svg",
+                "alt": "c-sharp-icon"
+            },
+            {
+                "title": "C++",
+                "src": "/images/tech-icons/cplusplus.svg",
+                "alt": "c-plus-plus-icon"
+            }
+        ]
+    },
+    {
+        "category": "Frontend",
+        "items": [
+            {
+                "title": "HTML5",
+                "src": "/images/tech-icons/html-5.svg",
+                "alt": "html5-icon"
+            },
+            {
+                "title": "CSS3",
+                "src": "/images/tech-icons/css-3.svg",
+                "alt": "css3-icon"
+            },
+            {
+                "title": "React",
+                "src": "/images/tech-icons/react.svg",
+                "alt": "react-icon"
+            },
+            {
+                "title": "TailwindCSS",
+                "src": "/images/tech-icons/tailwind-css.svg",
+                "alt": "tailwind-css-icon"
+            },
+            {
+                "title": "Material UI",
+                "src": "/images/tech-icons/material-ui.png",
+                "alt": "materialui-icon"
+            }
+        ]
+    },
+    {
+        "category": "Backend & DevOps",
+        "items": [
+            {
+                "title": "Node.js",
+                "src": "/images/tech-icons/nodejs.svg",
+                "alt": "nodejs-icon"
+            },
+            {
+                "title": "Next.js",
+                "src": "/images/tech-icons/next-js.svg",
+                "alt": "nextjs-icon"
+            },
+            {
+                "title": "Express",
+                "src": "/images/tech-icons/express.svg",
+                "alt": "express-icon"
+            },
+            {
+                "title": "MongoDB",
+                "src": "/images/tech-icons/mongodb.svg",
+                "alt": "mongodb-icon"
+            },
+            {
+                "title": "AWS S3",
+                "src": "/images/tech-icons/aws_s3.png",
+                "alt": "awss3-icon"
+            }
+        ]
+    },
+    {
+        "category": "Tools",
+        "items": [
+            {
+                "title": "VS Code",
+                "src": "/images/tech-icons/visual-studio-code.svg",
+                "alt": "vs-code-icon"
+            },
+            {
+                "title": "IntelliJ IDEA",
+                "src": "/images/tech-icons/intellij-idea.svg",
+                "alt": "intellij-idea-icon"
+            },
+            {
+                "title": "PyCharm",
+                "src": "/images/tech-icons/jetbrains-pycharm.svg",
+                "alt": "pycharm-icon"
+            },
+            {
+                "title": "Postman",
+                "src": "/images/tech-icons/postman.svg",
+                "alt": "postman-icon"
+            }
+        ]
+    }
+]

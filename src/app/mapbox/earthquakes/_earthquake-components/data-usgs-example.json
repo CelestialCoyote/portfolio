@@ -1,0 +1,53 @@
+{
+    "type": "FeatureCollection",
+    "metadata": {
+        "generated": 1737329512000,
+        "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-01-01&minmagnitude=2.5",
+        "title": "USGS Earthquakes",
+        "status": 200,
+        "api": "1.14.1",
+        "count": 825
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "mag": 2.5,
+                "place": "34 km NNE of Chenega, Alaska",
+                "time": 1737317581942,
+                "updated": 1737317742408,
+                "tz": null,
+                "url": "https://earthquake.usgs.gov/earthquakes/eventpage/ak025vr71xu",
+                "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=ak025vr71xu&format=geojson",
+                "felt": null,
+                "cdi": null,
+                "mmi": null,
+                "alert": null,
+                "status": "automatic",
+                "tsunami": 0,
+                "sig": 96,
+                "net": "ak",
+                "code": "025vr71xu",
+                "ids": ",ak025vr71xu,",
+                "sources": ",ak,",
+                "types": ",origin,phase-data,",
+                "nst": null,
+                "dmin": null,
+                "rms": 0.96,
+                "gap": null,
+                "magType": "ml",
+                "type": "earthquake",
+                "title": "M 2.5 - 34 km NNE of Chenega, Alaska"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -147.7629,
+                    60.3472,
+                    12.6
+                ]
+            },
+            "id": "ak025vr71xu"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+src/
+├── app/
+│   ├── api/
+│   │   ├── nasa/
+│   │   │   ├── apod/
+│   │   │   │   └── route.ts
+│   │   │   ├── image-library/
+│   │   │   │   └── route.ts
+├── components/
+│   ├── ImageLibrary.tsx
+│   ├── NasaImageResults.tsx
