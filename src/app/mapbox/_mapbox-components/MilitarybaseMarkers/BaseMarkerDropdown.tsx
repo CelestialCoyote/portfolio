@@ -8,24 +8,48 @@ import styles from "./map-popup.module.css";
 
 type SelectMapStyleProps = {
     mapRef: React.RefObject<MapRef | null>;
-};
+}
+
+type GeoJSONFeature = {
+    type: "Feature";
+    properties: {
+        installation: string;
+        branch: string;
+        state: string;
+        jointBase: boolean | null;
+        locationLat: string;
+        locationLong: string;
+        STATEFP: string;
+        NAME: string;
+        STUSPS: string;
+        zip_codes: string[];
+    }
+    geometry: {
+        type: "Point";
+        coordinates: [number, number]; // Ensures exactly two elements.
+    }
+}
+
+type GeoJSONData = {
+    type: "FeatureCollection";
+    features: GeoJSONFeature[];
+}
 
 type MarkerGroup = {
-    [key: string]: GeoJSON.Feature[];
-};
+    [key: string]: GeoJSONFeature[];
+}
 
 type MarkerVisibility = {
     [key: string]: boolean;
-};
+}
 
 type BranchInfo = {
     id: string;
     branch: string;
     color: string;
-};
+}
 
-
-const branchImages = {
+const branchImages: Record<string, string> = {
     "air-force": "/images/us-military-branch-seals/air-force.png",
     "army": "/images/us-military-branch-seals/army.png",
     "coast-guard": "/images/us-military-branch-seals/coast-guard.png",
@@ -33,7 +57,7 @@ const branchImages = {
     "marine-corps": "/images/us-military-branch-seals/marine-corps.png",
     "navy": "/images/us-military-branch-seals/navy.png",
     "space-force": "/images/us-military-branch-seals/space-force.png",
-};
+}
 
 const branchData: BranchInfo[] = [
     { id: "air-force", branch: "Air Force", color: "#00308F" },
@@ -45,51 +69,53 @@ const branchData: BranchInfo[] = [
     { id: "space-force", branch: "Space Force", color: "#009EE0" },
 ];
 
-
 const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
-    const [selectedBase, setSelectedBase] = useState(null);
-    const [hoveredBase, setHoveredBase] = useState(null);
+    const [hoveredBase, setHoveredBase] = useState<GeoJSONFeature | null>(null);
+
     const [markerVisibility, setMarkerVisibility] = useState<MarkerVisibility>({
-        "none": true,
+        none: true,
         "air-force": false,
-        "army": false,
+        army: false,
         "coast-guard": false,
-        "dod": false,
+        dod: false,
         "marine-corps": false,
-        "navy": false,
+        navy: false,
         "space-force": false,
     });
 
     const [branchMarkers, setBranchMarkers] = useState<MarkerGroup>({
         "air-force": [],
-        "army": [],
+        army: [],
         "coast-guard": [],
-        "dod": [],
+        dod: [],
         "marine-corps": [],
-        "navy": [],
+        navy: [],
         "space-force": [],
     });
 
     useEffect(() => {
-        const groupedMarkers: MarkerGroup = markers.features.reduce((acc, marker) => {
-            const branch = marker.properties.branch;
+        const groupedMarkers: MarkerGroup = (markers as GeoJSONData).features.reduce(
+            (acc: MarkerGroup, marker: GeoJSONFeature) => {
+                const branch = marker.properties.branch;
 
-            if (acc[branch]) {
-                acc[branch].push(marker);
-            } else {
-                acc[branch] = [marker];
+                if (acc[branch]) {
+                    acc[branch].push(marker);
+                } else {
+                    acc[branch] = [marker];
+                }
+
+                return acc;
+            },
+            {
+                "air-force": [],
+                army: [],
+                "coast-guard": [],
+                dod: [],
+                "marine-corps": [],
+                navy: [],
+                "space-force": [],
             }
-
-            return acc;
-        }, {
-            "air-force": [],
-            "army": [],
-            "coast-guard": [],
-            "dod": [],
-            "marine-corps": [],
-            "navy": [],
-            "space-force": [],
-        });
+        );
 
         setBranchMarkers(groupedMarkers);
     }, []);
@@ -105,9 +131,14 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
                     <BaseMarker
                         key={branchKey}
                         mapRef={mapRef}
-                        data={{ features: branchMarkerArray }}
+                        // data={{ features: branchMarkerArray }}
+                        data={{
+                            type: "FeatureCollection", // Required by GeoJSONData
+                            features: branchMarkerArray, // Your features array
+                        }}
                         imagePath={branchImages[branchKey]}
-                        setSelectedBase={setSelectedBase}
+                        setSelectedBase={() => { }} // Placeholder, remove or implement if needed
+                        // setSelectedArea={setSelectedArea}
                         setHoveredBase={setHoveredBase}
                     />
                 );
@@ -119,14 +150,15 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
                     anchor="bottom"
                     latitude={hoveredBase.geometry.coordinates[1]}
                     longitude={hoveredBase.geometry.coordinates[0]}
-                    onClose={() => setSelectedBase(null)}
+                    onClose={() => setHoveredBase(null)}
                     closeButton={false}
                 >
                     <h3
                         className={styles.popupTitle}
                         style={{
-                            backgroundColor: branchData.find(branch =>
-                                branch.id === hoveredBase.properties.branch)?.color || "#0000FF"
+                            backgroundColor:
+                                branchData.find((branch) => branch.id === hoveredBase.properties.branch)
+                                    ?.color || "#0000FF",
                         }}
                     >
                         Selected Base
@@ -134,22 +166,14 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
 
                     <div className="flex flex-col bg-slate-200 text-black px-2 py-1">
                         <div className="flex">
-                            <p className="font-bold mr-2">
-                                Name:
-                            </p>
-
+                            <p className="font-bold mr-2">Name:</p>
                             {hoveredBase.properties.installation}
                         </div>
 
                         <div className="flex">
-                            <p className="font-bold mr-2">
-                                Branch:
-                            </p>
-
-                            {
-                                branchData.find(branch =>
-                                    branch.id === hoveredBase.properties.branch)?.branch || "Unknown"
-                            }
+                            <p className="font-bold mr-2">Branch:</p>
+                            {branchData.find((branch) => branch.id === hoveredBase.properties.branch)
+                                ?.branch || "Unknown"}
                         </div>
                     </div>
                 </Popup>
@@ -161,6 +185,6 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
             />
         </>
     );
-}
+};
 
-export default BaseMarkerDropdown
+export default BaseMarkerDropdown;

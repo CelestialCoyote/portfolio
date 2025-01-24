@@ -9,7 +9,7 @@ import "@/components/mapbox.css";
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
-import BaseMarkersDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
+import BaseMarkerDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
 import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-style";
 
 
@@ -42,7 +42,7 @@ const MilitaryBasesMap: React.FC = () => {
         // Simulate a delay to show the skeleton screen
         const timer = setTimeout(() => {
             setLoading(false); // Stop showing the skeleton after 3 seconds
-        }, 3000);
+        }, 5);
 
         return () => clearTimeout(timer); // Cleanup timeout when component unmounts
     }, []);
@@ -94,7 +94,7 @@ const MilitaryBasesMap: React.FC = () => {
                     </div>
 
                     <div className="absolute top-2 right-2">
-                        <BaseMarkersDropdown
+                        <BaseMarkerDropdown
                             mapRef={mapRef}
                         />
                     </div>
