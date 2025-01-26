@@ -7,18 +7,19 @@ export async function GET() {
 
     try {
         // console.log(`apod current date: ${currentDate}`);
-        // console.log(`Using NASA_API_KEY: ${process.env.NASA_API_KEY ? "Defined" : "Undefined"}`);
+        console.log(`Using NASA_API_KEY: ${process.env.NASA_API_KEY ? "Defined" : "Undefined"}`);
 
         const response = await fetch(
             `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}&date=${currentDate}`
         );
 
         // Log response status and headers for debugging
-        // console.log("Response status:", response.status);
-        // console.log("Response headers:", JSON.stringify([...response.headers]));
+        console.log("Response status:", response.status);
+        console.log("Response headers:", JSON.stringify([...response.headers]));
 
         if (!response.ok) {
             const errorText = await response.text(); // Log the body of the error response
+
             console.error("Error response body:", errorText);
             throw new Error(`Failed to fetch data from NASA API. Status: ${response.status}`);
         }
@@ -29,6 +30,7 @@ export async function GET() {
         return NextResponse.json(data);
     } catch (error) {
         console.error("Error fetching data:", error.message);
+
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
