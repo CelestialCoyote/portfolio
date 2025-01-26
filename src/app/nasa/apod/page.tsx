@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 
-const baseURL = process.env.BASE_API_URL;
+// const baseURL = process.env.BASE_API_URL;
 
 const getAPODData = async () => {
     try {
@@ -9,7 +9,8 @@ const getAPODData = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 2000));
 
         const response = await fetch(
-            `${baseURL}/nasa/apod`,
+            // `${baseURL}/nasa/apod`,
+            `api/nasa/apod`,
             { cache: "no-store" }
         );
 
@@ -104,21 +105,3 @@ export default async function Apod() {
         </div>
     );
 }
-
-
-
-
-// import React from "react";
-
-
-// const Apod: React.FC = () => {
-//     return (
-//         <main className="flex flex-col w-full p-6">
-//             <div className="flex justify-center items-center text-3xl font-bold my-2">
-//                 NASA Astronomy Photo of the Day
-//             </div>
-//         </main>
-//     );
-// }
-
-// export default Apod;
