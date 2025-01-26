@@ -24,13 +24,13 @@ export async function GET() {
             throw new Error(`Failed to fetch data from NASA API. Status: ${response.status}`);
         }
 
-        // const data = await response.json();
+        const data = await response.json();
         // console.log("Fetched data:", JSON.stringify(data));
 
-        // return NextResponse.json(data);
-        return NextResponse.json({
-            nasa: "astronomy photo of the day",
-        })
+        return NextResponse.json(data);
+        // return NextResponse.json({
+        //     nasa: "astronomy photo of the day",
+        // })
     } catch (error) {
         console.error("Error fetching data:", error.message);
 
