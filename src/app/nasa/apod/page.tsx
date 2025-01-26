@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 
-// const baseURL = process.env.BASE_API_URL;
+const baseURL = process.env.BASE_API_URL;
 
 const getAPODData = async () => {
     try {
@@ -9,8 +9,7 @@ const getAPODData = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 2000));
 
         const response = await fetch(
-            // `${baseURL}/nasa/apod`,
-            `/api/nasa/apod`,
+            `${baseURL}/api/nasa/apod`,
             { cache: "no-store" }
         );
 
