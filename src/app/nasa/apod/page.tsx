@@ -7,6 +7,7 @@ const getAPODData = async () => {
     try {
         // Simulate a delay for development
         // await new Promise((resolve) => setTimeout(resolve, 2000));
+        console.log(process.env.NEXT_PUBLIC_BASE_URL);
 
         const response = await fetch(
             `${baseURL}/api/nasa/apod`,

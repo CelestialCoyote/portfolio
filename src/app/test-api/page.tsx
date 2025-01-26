@@ -1,6 +1,7 @@
 const getTestData = async () => {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; // Fallback to localhost
+        // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; // Fallback to localhost
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // Fallback to localhost
         const response = await fetch(`${baseUrl}/api/`, { cache: "no-store" });
 
         if (!response.ok) {
