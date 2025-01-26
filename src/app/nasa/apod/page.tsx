@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 
-const baseURL = process.env.BASE_API_URL;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const getAPODData = async () => {
     try {
