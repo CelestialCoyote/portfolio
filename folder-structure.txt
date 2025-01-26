@@ -9,3 +9,61 @@ src/
 ├── components/
 │   ├── ImageLibrary.tsx
 │   ├── NasaImageResults.tsx
+
+├── .next/
+├── node_modules/
+├── public/
+│   └── images/
+│       └── ...
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── nasa/
+│   │   │       └── apod/
+│   │   │       │   └── route.ts
+│   │   │       └── image-library/
+│   │   │           └── route.ts
+│   │   ├── mapbox/
+│   │   │   └── ...
+│   │   ├── nasa/
+│   │   │   ├── _nasa-components/
+│   │   │   │   └── ...
+│   │   │   ├── apod/
+│   │   │   │   └── ...
+│   │   │   ├── epic/
+│   │   │   │   └── ...
+│   │   │   ├── image-library/
+│   │   │   │   ├── _components
+│   │   │   │   │   ├── Details.tsx
+│   │   │   │   │   ├── Gallery.tsx
+│   │   │   │   │   ├── ImageLibrary.tsx
+│   │   │   │   │   └── Search.tsx
+│   │   │   │   ├── interfaces
+│   │   │   │   └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── Footer/
+│   │   │   └── Footer.tsx
+│   │   └── Navbar/
+│   │       └── Navbar.tsx  
+│   ├── lib/
+│   │   └── mongodb.ts
+│   └── ...
+├── .env
+├── .eslintrc.json
+├── .gitignore
+├── global.d.ts
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── README.md
+├── tsconfig.json
+└── folder-structure.txt
