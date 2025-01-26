@@ -10,7 +10,7 @@ const getAPODData = async () => {
 
         const response = await fetch(
             // `${baseURL}/nasa/apod`,
-            `api/nasa/apod`,
+            `/api/nasa/apod`,
             { cache: "no-store" }
         );
 
