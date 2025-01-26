@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -42,7 +42,11 @@ export default async function Apod() {
                 Astronomy Photo of the Day
             </h1>
 
-            <div className="grid lg:grid-cols-2 lg:gap-4 p-8">
+            <div className="">
+                <pre>{JSON.stringify(data, null, 2)}</pre>
+            </div>
+
+            {/* <div className="grid lg:grid-cols-2 lg:gap-4 p-8">
                 {data.media_type === "video" ? (
                     <div className="relative h-[50vh] mb-4 lg:mb-0">
                         <iframe
@@ -101,7 +105,7 @@ export default async function Apod() {
                         {data.explanation}
                     </p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
