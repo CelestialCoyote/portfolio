@@ -1,55 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "./Search";
 import Gallery from "./Gallery";
-
-
-type NasaItem = {
-    data: {
-        title: string;
-        description: string;
-        nasa_id: string;
-    }[];
-    links: {
-        href: string; // Image URL
-        rel: string;  // Relation type (e.g., preview)
-        render: string; // Media type (e.g., image)
-    }[];
-}
-
-type NasaApiResponse = {
-    collection: {
-        items: NasaItem[];
-    };
-}
+import { baseURL } from "@/app/api/baseURL";
+import { NasaItem, NasaApiResponse } from "../types/nasa";
+import { generateRandomTopic } from "../utils/generateTopic";
 
 
 const ImageLibraryPage: React.FC = () => {
-    const [images, setImages] = useState<{ href: string; title: string }[]>([]);
+    const [images, setImages] = useState<NasaItem[]>([]);
+    const [searchTerm, setSearchTerm] = useState<string>("");
 
     const fetchImages = async (query: string) => {
         try {
-            const res = await fetch(
-                `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`
-            );
+            const res = await fetch(`${baseURL}/api/nasa/image-library?q=${encodeURIComponent(query)}`);
+            
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || "Failed to fetch images");
+            }
+    
             const data: NasaApiResponse = await res.json();
-
-            const imageResults =
-                data.collection?.items?.map((item: NasaItem) => ({
-                    href: item.links?.[0]?.href || "",
-                    title: item.data?.[0]?.title || "Untitled",
-                })) || [];
-
-            setImages(imageResults);
+    
+            setImages(data.collection?.items || []);
+            setSearchTerm(query);
         } catch (error) {
             console.error("Error fetching images:", error);
         }
-    }
+    };
+
+    useEffect(() => {
+        const topic = generateRandomTopic(); // Generate a random topic
+        fetchImages(topic); // Fetch images for the random topic
+    }, []);
 
     return (
-        <div className="min-h-screen">
+        <div className="w-full min-h-screen">
             <Search onSearch={fetchImages} />
+
+            {searchTerm && (
+                <label className="text-2xl text-purple-500 mt-4 mb-8 block text-center">
+                    {`Showing results of search for "${searchTerm}"`}
+                </label>
+            )}
+
             {images.length > 0 ? (
                 <Gallery images={images} />
             ) : (

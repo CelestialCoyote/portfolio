@@ -38,7 +38,6 @@ src/
 │   │   │   │   │   ├── Gallery.tsx
 │   │   │   │   │   ├── ImageLibrary.tsx
 │   │   │   │   │   └── Search.tsx
-│   │   │   │   ├── interfaces
 │   │   │   │   └── page.tsx
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx

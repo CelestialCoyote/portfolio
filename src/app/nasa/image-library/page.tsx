@@ -3,7 +3,7 @@ import ImageLibrary from "./_components/ImageLibrary";
 
 const ImageLibraryPage: React.FC = () => {
     return (
-        <div>
+        <div className="w-full h-full">
             <ImageLibrary />
         </div>
     );

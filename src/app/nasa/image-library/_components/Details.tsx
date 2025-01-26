@@ -1,15 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { NasaImageData } from "../interfaces/NasaImageInterfaces";
+import { NasaItem } from "../types/nasa";
 
 
 interface DetailsProps {
-	image: {
-		links: { href: string }[];
-		data: NasaImageData[]; // Use the NasaImageData interface for data
-		keywords?: string[];
-	};
+	image: NasaItem;
 	setDetails: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -41,53 +36,53 @@ const Details: React.FC<DetailsProps> = ({ image, setDetails }) => {
 
 					<hr className="pt-1 pb-2 border-gray-900" />
 
-					<div className="flex flex-col gap-2">
-						<div>
-							<p className='inline text-lg text-gray-400'>
+					<div className="flex flex-col gap-2 mb-2">
+						<div className="flex flex-col">
+							<p className="text-gray-400">
 								Keywords:
 							</p>
-							<div className='inline'>
-								{image?.keywords?.map((keyword: string, index: number) => (
-									<Link href={`/images?q=${keyword}`} key={index}>
-										<a className='text-lg rounded-md cursor-pointer text-primary-light hover:underline'>
-											{keyword},{' '}
-										</a>
-									</Link>
+
+							<div className="flex space-x-1">
+								{image?.data[0].keywords?.map((keyword: string, index: number) => (
+									<p key={index}>
+										{keyword},{' '}
+									</p>
 								))}
 							</div>
 						</div>
-						<div className="">
-							<div>
-								<p className="inline text-lg text-gray-400">
-									Secondary Creator:{' '}
-								</p>
-								<p className='inline'>
-									{image.data[0].secondary_creator}
-								</p>
-							</div>
+
+						<div className="flex flex-col">
+							<p className="text-gray-400">
+								Secondary Creator:{' '}
+							</p>
+
+							<p>
+								{image.data[0].secondary_creator}
+							</p>
 						</div>
 
-						<div>
-							<p className='inline text-lg text-gray-400'>
+						<div className="flex flex-col">
+							<p className="text-gray-400">
 								NASA ID:
 							</p>
-							<p className='inline'>
+
+							<p>
 								{image.data[0].nasa_id}
 							</p>
 						</div>
 
-						<div>
-							<p className='inline text-lg text-gray-400'>
+						<div className="flex flex-col">
+							<p className="text-gray-400">
 								Center:
 							</p>
-							<p className='inline'>
+
+							<p>
 								{image.data[0].center}
 							</p>
 						</div>
-
 					</div>
 
-					<hr className='pt-1 pb-2 border-gray-900' />
+					<hr className="pt-1 pb-2 border-gray-900" />
 
 					<div className="overflow-y-scroll no-scrollbar break-words">
 						{image.data[0].description}
@@ -95,9 +90,9 @@ const Details: React.FC<DetailsProps> = ({ image, setDetails }) => {
 				</div>
 			</div>
 
-			<div className="flex justify-center mt-6 mb-6">
+			<div className="flex justify-center mt-4 mb-4">
 				<button
-					className="border-2 w-36 p-2 rounded-xl"
+					className="w-36 border-2 rounded-xl p-2 hover:underline"
 					onClick={() => {
 						setDetails(false);
 					}}

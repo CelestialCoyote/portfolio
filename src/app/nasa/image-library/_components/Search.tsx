@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+
 interface SearchProps {
 	onSearch: (query: string) => void;
 }
@@ -16,18 +17,18 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
 	}
 
 	return (
-		<div className="flex items-center gap-4 p-4">
+		<div className="flex items-center w-full gap-4 p-4">
 			<input
 				type="text"
-				className="flex-1 p-2 text-black border rounded-lg shadow-md focus:outline-none focus:ring focus:ring-blue-500"
+				className="w-full h-14 pl-6 rounded-lg placeholder-purple-500 outline-none bg-transparent border-purple-400 border-2"
 				value={query}
 				placeholder="Search for NASA images (e.g., Jupiter, Apollo)"
 				onChange={(e) => setQuery(e.target.value)}
 			/>
 
 			<button
+				className="w-24 h-14 rounded-lg text-purple-500 border-purple-400 disabled:text-gray-700 disabled:border-gray-700 border-2"
 				onClick={handleSearch}
-				className="px-4 py-2 text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none"
 			>
 				Search
 			</button>
