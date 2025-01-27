@@ -7,7 +7,7 @@ const NasaLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <div className="flex h-[calc(100vh-96px)]">
             <div className="fixed left-0">
-                <NasaSidebar currentIndex={1} />
+                <NasaSidebar currentIndex={0} />
             </div>
 
             {/* Main content area */}
