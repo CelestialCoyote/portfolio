@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Search from "./Search";
 import Gallery from "./Gallery";
+import ImageLibrarySkeleton from "./ImageLibrarySkeleton";
 import { baseURL } from "@/app/api/baseURL";
 import { NasaItem, NasaApiResponse } from "../types/nasa";
 import { generateRandomTopic } from "../utils/generateTopic";
@@ -11,8 +12,11 @@ import { generateRandomTopic } from "../utils/generateTopic";
 const ImageLibraryPage: React.FC = () => {
     const [images, setImages] = useState<NasaItem[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const [loading, setLoading] = useState(true);
 
     const fetchImages = async (query: string) => {
+        setLoading(true);
+
         try {
             const res = await fetch(`${baseURL}/api/nasa/image-library?q=${encodeURIComponent(query)}`);
             
@@ -27,8 +31,10 @@ const ImageLibraryPage: React.FC = () => {
             setSearchTerm(query);
         } catch (error) {
             console.error("Error fetching images:", error);
+        } finally {
+            setLoading(false); // End loading
         }
-    };
+    }
 
     useEffect(() => {
         const topic = generateRandomTopic(); // Generate a random topic
@@ -37,20 +43,28 @@ const ImageLibraryPage: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen">
-            <Search onSearch={fetchImages} />
+            <h1 className="text-3xl text-center mt-4 mb-6">
+                Image Library
+            </h1>
 
-            {searchTerm && (
-                <label className="text-2xl text-purple-500 mt-4 mb-8 block text-center">
-                    {`Showing results of search for "${searchTerm}"`}
-                </label>
-            )}
-
-            {images.length > 0 ? (
-                <Gallery images={images} />
+            {loading ? (
+                <ImageLibrarySkeleton />
             ) : (
-                <p className="p-4 text-center text-gray-600">
-                    No images found. Try searching for something else!
-                </p>
+                <>
+                    <Search onSearch={fetchImages} />
+                    {searchTerm && (
+                        <label className="text-2xl text-purple-500 mt-4 mb-8 block text-center">
+                            {`Showing results of search for "${searchTerm}"`}
+                        </label>
+                    )}
+                    {images.length > 0 ? (
+                        <Gallery images={images} />
+                    ) : (
+                        <p className="p-4 text-center text-gray-600">
+                            No images found. Try searching for something else!
+                        </p>
+                    )}
+                </>
             )}
         </div>
     );

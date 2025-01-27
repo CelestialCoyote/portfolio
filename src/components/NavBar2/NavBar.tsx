@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
     const [open, setOpen] = useState(false);    // State to toggle the visibility of the mobile menu
 
     return (
-        <nav className="fixed top-0 left-0 flex items-center justify-evenly bg-gray-800 text-white w-full h-[64px] font-medium px-4 z-50">
+        <nav className="fixed top-0 left-0 flex items-center justify-between bg-gray-800 text-white w-full h-[64px] font-medium px-4 z-50">
             {/* Left Section: Logo and Menu Icon */}
             <div className="flex justify-between items-center z-20 w-full px-5 md:w-auto">
                 {/* Logo linking back to the homepage */}
@@ -50,6 +50,10 @@ const Navbar: React.FC = () => {
             {/* Desktop Navigation Links */}
             <div className="hidden gap-x-8 md:flex">
                 <NavLinks open={open} setOpen={setOpen} /> {/* Render NavLinks component */}
+            </div>
+
+            {/* Render spaceholder component */}
+            <div className="w-[100px] hidden gap-x-8 md:flex">
             </div>
 
             {/* Mobile Navigation Menu */}

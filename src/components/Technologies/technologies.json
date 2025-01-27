@@ -33,16 +33,6 @@
         "category": "Frontend",
         "items": [
             {
-                "title": "HTML5",
-                "src": "/images/tech-icons/html-5.svg",
-                "alt": "html5-icon"
-            },
-            {
-                "title": "CSS3",
-                "src": "/images/tech-icons/css-3.svg",
-                "alt": "css3-icon"
-            },
-            {
                 "title": "React",
                 "src": "/images/tech-icons/react.svg",
                 "alt": "react-icon"
@@ -56,6 +46,16 @@
                 "title": "Material UI",
                 "src": "/images/tech-icons/material-ui.png",
                 "alt": "materialui-icon"
+            },
+            {
+                "title": "HTML5",
+                "src": "/images/tech-icons/html-5.svg",
+                "alt": "html5-icon"
+            },
+            {
+                "title": "CSS3",
+                "src": "/images/tech-icons/css-3.svg",
+                "alt": "css3-icon"
             }
         ]
     },
@@ -63,14 +63,14 @@
         "category": "Backend & DevOps",
         "items": [
             {
-                "title": "Node.js",
-                "src": "/images/tech-icons/nodejs.svg",
-                "alt": "nodejs-icon"
-            },
-            {
                 "title": "Next.js",
                 "src": "/images/tech-icons/next-js.svg",
                 "alt": "nextjs-icon"
+            },
+            {
+                "title": "Node.js",
+                "src": "/images/tech-icons/nodejs.svg",
+                "alt": "nodejs-icon"
             },
             {
                 "title": "Express",
