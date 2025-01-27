@@ -5,11 +5,12 @@ import { FiCamera, FiGlobe, FiHome, FiImage, FiInfo } from "react-icons/fi";
 
 
 // Define the props interface explicitly
-interface NasaSidebarProps {
-    currentIndex: number;
-}
+// interface NasaSidebarProps {
+//     currentIndex: number;
+// }
 
-const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
+// const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
+const NasaSidebar: React.FC = () => {
     return (
         <div className='fixed top-0 left-0 w-[275px] h-[calc(100vh-96px)] mt-[64px] z-20'>
             <div className='flex flex-col h-full bg-black'>
@@ -38,8 +39,8 @@ const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
                             <Link
                                 href='/'
                                 className={
-                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-primary
-                                        ${currentIndex === 0 ? 'text-white' : 'text-primary-light'}`
+                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-purple-300`
+                                        // ${currentIndex === 0 ? 'text-white' : 'text-purple-400'}`
                                 }
                             >
                                 <FiHome className='flex-shrink-0 w-6 h-6 mr-3' />
@@ -49,8 +50,8 @@ const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
                             <Link
                                 href='/nasa'
                                 className={
-                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-primary
-                                        ${currentIndex === 1 ? 'text-white' : 'text-primary-light'}`
+                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-purple-300`
+                                        // ${currentIndex === 1 ? 'text-white' : 'text-white'}`
                                 }
                             >
                                 <FiInfo className='flex-shrink-0 w-6 h-6 mr-3' />
@@ -60,8 +61,8 @@ const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
                             <Link
                                 href='/nasa/apod'
                                 className={
-                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-primary
-                                        ${currentIndex === 4 ? 'text-white' : 'text-primary-light'}`
+                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-purple-300`
+                                        // ${currentIndex === 3 ? 'text-white' : 'text-white'}`
                                 }
                             >
                                 <FiCamera className='flex-shrink-0 w-6 h-6 mr-3' />
@@ -71,8 +72,8 @@ const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
                             <Link
                                 href='/nasa/image-library'
                                 className={
-                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-primary
-                                        ${currentIndex === 2 ? 'text-white' : 'text-primary-light'}`
+                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-purple-300`
+                                        // ${currentIndex === 4 ? 'text-white' : 'text-white'}`
                                 }
                             >
                                 <FiImage className='flex-shrink-0 w-6 h-6 mr-3' />
@@ -82,8 +83,8 @@ const NasaSidebar: React.FC<NasaSidebarProps> = ({ currentIndex }) => {
                             <Link
                                 href='/nasa/epic'
                                 className={
-                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-primary
-                                        ${currentIndex === 3 ? 'text-white' : 'text-primary-light'}`
+                                    `flex items-center px-2 py-2 text-sm font-medium rounded-md group hover:text-purple-300`
+                                        // ${currentIndex === 5 ? 'text-white' : 'text-white'}`
                                 }
                             >
 
