@@ -6,12 +6,10 @@ import { ReactNode } from "react";
 const NasaLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <div className="flex h-[calc(100vh-96px)]">
-            <div className="fixed left-0">
-                <NasaSidebar currentIndex={0} />
-            </div>
+            <NasaSidebar />
 
             {/* Main content area */}
-            <main className="flex w-full ml-[275px]">
+            <main className="flex w-full lg:ml-[275px] mt-[64px]">
                 {children}
             </main>
         </div>
