@@ -25,7 +25,7 @@ export async function GET() {
         }
 
         const data = await response.json();
-        // console.log("Fetched data:", JSON.stringify(data));
+        
 
         return NextResponse.json(data);
         // return NextResponse.json({
@@ -37,3 +37,4 @@ export async function GET() {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
+// console.log("Fetched data:", JSON.stringify(data));
