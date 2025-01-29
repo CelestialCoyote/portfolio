@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
             <div className="flex justify-between items-center z-20 w-full px-5 md:w-auto">
                 {/* Logo linking back to the homepage */}
                 <Link href="/" className="">
-                    <div className="flex justify-center h-[100px] mr-4">
+                    <div className="flex justify-center h-[100px]">
                         <Image
                             className="w-full h-full object-contain"
                             src="/images/celestial-coyote.svg"
