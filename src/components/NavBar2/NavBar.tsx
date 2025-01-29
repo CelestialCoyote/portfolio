@@ -36,13 +36,13 @@ const Navbar: React.FC = () => {
                     // Close icon, shown when the mobile menu is open
                     <AiOutlineClose
                         onClick={() => setOpen(!open)} // Toggles the mobile menu
-                        className="text-4xl text-red-500 md:hidden cursor-pointer" // Red close icon for mobile
+                        className="w-[40px] h-[40px] text-red-500 md:hidden cursor-pointer" // Red close icon for mobile
                     />
                 ) : (
                     // Menu icon, shown when the mobile menu is closed
                     <FiMenu
                         onClick={() => setOpen(!open)} // Toggles the mobile menu
-                        className="text-4xl md:hidden cursor-pointer" // White menu icon for mobile
+                        className="w-[40px] h-[40px] md:hidden cursor-pointer" // White menu icon for mobile
                     />
                 )}
             </div>
