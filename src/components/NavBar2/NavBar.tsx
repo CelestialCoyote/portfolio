@@ -14,16 +14,16 @@ const Navbar: React.FC = () => {
     return (
         <nav className="fixed top-0 left-0 flex items-center justify-between bg-gray-800 text-white w-full h-[64px] font-medium px-4 z-50">
             {/* Left Section: Logo and Menu Icon */}
-            <div className="flex justify-between items-center z-20 w-full px-5 md:w-auto">
+            <div className="flex justify-between items-center w-full px-5 z-20 md:w-auto">
                 {/* Logo linking back to the homepage */}
                 <Link href="/" className="">
-                    <div className="flex justify-center h-[100px]">
+                    <div className="flex justify-center w-[64px] h-[64px]">
                         <Image
-                            className="w-full h-full object-contain"
-                            src="/images/celestial-coyote.svg"
+                            className="w-full h-auto object-contain"
+                            src="/images/celestial-coyote.png"
                             alt="celestial coyote logo"
                             placeholder="blur"
-                            blurDataURL="/images/celestial-coyote.svg"
+                            blurDataURL="/images/celestial-coyote.png"
                             width="0"
                             height="0"
                             sizes="100vh"
