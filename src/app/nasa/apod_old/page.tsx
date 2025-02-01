@@ -1,5 +1,5 @@
 import React from "react";
-import Apod from "./_apod-components/Apod";
+import Apod from "./_components/Apod";
 
 
 const ApodPage: React.FC = () => {

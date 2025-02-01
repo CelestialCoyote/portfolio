@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Search from "./Search";
 import Gallery from "./Gallery";
 import ImageLibrarySkeleton from "./ImageLibrarySkeleton";
-import { baseURL } from "@/app/api/baseURL";
+// import { baseURL } from "@/app/api/baseURL";
 import { NasaItem, NasaApiResponse } from "../types/nasa";
 import { generateRandomTopic } from "../utils/generateTopic";
 
@@ -18,7 +18,8 @@ const ImageLibraryPage: React.FC = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`${baseURL}/api/nasa/image-library?q=${encodeURIComponent(query)}`);
+            // const res = await fetch(`${baseURL}/api/nasa/image-library?q=${encodeURIComponent(query)}`);
+            const res = await fetch(`/api/nasa/image-library?q=${encodeURIComponent(query)}`);
             
             if (!res.ok) {
                 const errorData = await res.json();
@@ -38,6 +39,7 @@ const ImageLibraryPage: React.FC = () => {
 
     useEffect(() => {
         const topic = generateRandomTopic(); // Generate a random topic
+        
         fetchImages(topic); // Fetch images for the random topic
     }, []);
 
