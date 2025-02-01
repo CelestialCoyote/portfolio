@@ -4,10 +4,6 @@ import React from "react";
 const ApodSkeleton: React.FC = () => {
     return (
         <div className="">
-            <h1 className="text-3xl text-center mt-4 mb-6">
-                Astronomy Photo of the Day
-            </h1>
-
             <div className="grid lg:grid-cols-2 lg:gap-4 p-8">
                 {/* Media Skeleton */}
                 <div className="relative h-[50vh] mb-4 lg:mb-0 animate-pulse bg-gray-800 rounded-lg"></div>
