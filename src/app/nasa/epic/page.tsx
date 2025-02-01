@@ -1,5 +1,5 @@
 import React from "react";
-import Epic from "./_components/Epic";
+import Epic from "./_epic-components/Epic";
 
 
 const EpicPage: React.FC = () => {

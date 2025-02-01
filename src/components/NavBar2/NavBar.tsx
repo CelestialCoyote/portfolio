@@ -20,10 +20,10 @@ const Navbar: React.FC = () => {
                     <div className="flex justify-center w-[64px] h-[64px]">
                         <Image
                             className="w-full h-auto object-contain"
-                            src="/images/celestial-coyote.png"
+                            src="/images/celestial-coyote.svg"
                             alt="celestial coyote logo"
                             placeholder="blur"
-                            blurDataURL="/images/celestial-coyote.png"
+                            blurDataURL="/images/celestial-coyote.svg"
                             width="0"
                             height="0"
                             sizes="100vh"
