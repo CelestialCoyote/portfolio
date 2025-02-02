@@ -28,10 +28,10 @@ const NasaSidebar: React.FC = () => {
                         <div className="flex justify-center h-[100px]">
                             <Image
                                 className="w-full h-full object-contain"
-                                src="/images/NASA_logo.svg"
+                                src="/images/NASA-logo.svg"
                                 alt="NASA logo"
                                 placeholder="blur"
-                                blurDataURL="/images/NASA_logo.svg"
+                                blurDataURL="/images/NASA-logo.svg"
                                 width="0"
                                 height="0"
                                 sizes="100vh"
