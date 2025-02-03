@@ -20,6 +20,7 @@ export const getApodData = async (date?: string) => {
         return { data, message: "", rateLimit, rateRemaining };
     } catch (error) {
         console.error("Fetch error:", error);
+        
         return { data: null, message: "An error occurred while fetching data.", rateLimit: null, rateRemaining: null };
     }
 }
