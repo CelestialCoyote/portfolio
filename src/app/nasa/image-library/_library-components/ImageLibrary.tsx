@@ -5,7 +5,7 @@ import Search from "./Search";
 import Gallery from "./Gallery";
 import ImageLibrarySkeleton from "./ImageLibrarySkeleton";
 import { NasaItem, NasaApiResponse } from "../types/nasa";
-import { generateRandomTopic } from "../utils/generateTopic";
+import { generateRandomTopic } from "../_library-utils/generateTopic";
 
 
 const ImageLibraryPage: React.FC = () => {

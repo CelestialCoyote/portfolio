@@ -52,7 +52,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 
                                 <div className="flex justify-center">
                                     <button
-                                        className="w-32 rounded-lg cursor-pointer hover:underline border-purple-500 border-2 p-2"
+                                        className="flex justify-center items-center bg-black text-white font-bold w-[150px] gap-x-2 border-purple-500 border-2 rounded-lg p-2 hover:bg-purple-700"
                                         onClick={() => {
                                             setDetails(true);
                                             setImage(item); // Set the selected item as the image

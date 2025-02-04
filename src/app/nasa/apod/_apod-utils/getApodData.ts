@@ -15,7 +15,7 @@ export const getApodData = async (date?: string) => {
         const { data, rateLimit, rateRemaining } = await response.json();
 
         console.log(`Rate Limit: ${rateLimit}, Requests Remaining: ${rateRemaining}`);
-        console.log("data: ", data);
+        // console.log("data: ", data);
 
         return { data, message: "", rateLimit, rateRemaining };
     } catch (error) {

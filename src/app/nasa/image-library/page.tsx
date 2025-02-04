@@ -1,5 +1,5 @@
 import React from "react";
-import ImageLibrary from "./_components/ImageLibrary";
+import ImageLibrary from "./_library-components/ImageLibrary";
 
 
 const ImageLibraryPage: React.FC = () => {

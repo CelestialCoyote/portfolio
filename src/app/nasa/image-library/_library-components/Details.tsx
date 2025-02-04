@@ -10,7 +10,7 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ image, setDetails }) => {
 	return (
-		<div className="flex flex-col bg-slate-600 rounded-2xl m-2">
+		<div className="flex flex-col bg-black border-purple-500 border-2 rounded-2xl m-2">
 			<div className="flex gap-6">
 				<div className="flex w-1/2 items-center p-6">
 					<Image
@@ -92,7 +92,7 @@ const Details: React.FC<DetailsProps> = ({ image, setDetails }) => {
 
 			<div className="flex justify-center mt-4 mb-4">
 				<button
-					className="w-36 border-2 rounded-xl p-2 hover:underline"
+					className="flex justify-center items-center bg-black text-white font-bold w-[170px] gap-x-2 border-purple-500 border-2 rounded-lg p-2 hover:bg-purple-700"
 					onClick={() => {
 						setDetails(false);
 					}}
