@@ -1,9 +1,0 @@
-/* Overrides the original padding of the Popup component in the Map */
-.mapboxgl-popup-content {
-	border-radius: 8px !important;
-	padding: 0 !important;
-}
-
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-	border-top-color:  transparent !important;
-}

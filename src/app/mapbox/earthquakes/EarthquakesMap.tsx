@@ -12,6 +12,7 @@ import { filterEarthquakesByDay } from "./_earthquake-utils/filterEarthQuakesByD
 import { formatTimestamp } from "./_earthquake-utils/formatTimeStamp";
 import PlateBoundaries from "./_earthquake-components/Tectonic_Plates.json";
 import ControlPanel from "./_earthquake-components/control-panel";
+import DraggablePopup from "../_mapbox-components/DraggablePopup";
 import Skeleton from "../map-skeleton";
 
 
@@ -139,35 +140,69 @@ const EarthquakesMap: React.FC = () => {
                         closeOnClick={false}
                         offset={10}
                     >
-                        <div className="bg-gray-800 text-white p-1 text-sm">
-                            <h3>{hoveredEarthquake.properties.place}</h3>
-                            <p>Magnitude: {hoveredEarthquake.properties.mag}</p>
-                            <p>{formatTimestamp(hoveredEarthquake.properties.time)}</p>
+                        <div className="bg-gray-800 text-white text-center text-sm">
+                            {/* Split place into two lines */}
+                            {(() => {
+                                const placeParts = hoveredEarthquake.properties.place.split(" of ");
+
+                                return (
+                                    <h3 className="bg-gray-500 mb-[5px]">
+                                        {placeParts.length > 1 ? (
+                                            <>
+                                                {placeParts[0]} of <br />
+                                                {placeParts[1]}
+                                            </>
+                                        ) : (
+                                            hoveredEarthquake.properties.place
+                                        )}
+                                    </h3>
+                                );
+                            })()}
+
+                            <div className="pt-[10px] px-[5px]">
+                                {/* Get formatted date and time */}
+                                {(() => {
+                                    const { date, time } = formatTimestamp(hoveredEarthquake.properties.time);
+                                    
+                                    return (
+                                        <>
+                                            <p>{date}</p>
+                                            <p>{time}</p>
+                                        </>
+                                    );
+                                })()}
+
+                                <p>{hoveredEarthquake.properties.mag} Magnitude</p>
+
+                                <p className="text-center text-blue-400 py-[3px]">Click for more details</p>
+                            </div>
                         </div>
                     </Popup>
                 )}
 
                 {/* Click Popup */}
                 {selectedEarthquake && (
-                    <Popup
-                        longitude={selectedEarthquake.geometry.coordinates[0]}
-                        latitude={selectedEarthquake.geometry.coordinates[1]}
-                        onClose={() => setSelectedEarthquake(null)}
-                        closeOnClick={false}
-                        offset={10}
-                    >
-                        <div className="bg-gray-800 text-white p-2 text-sm">
-                            <h3>{selectedEarthquake.properties.place}</h3>
-                            <p>Magnitude: {selectedEarthquake.properties.mag}</p>
-                            <p>Depth: {selectedEarthquake.geometry.coordinates[2]} km</p>
-                            <button
-                                className="mt-1 px-2 py-1 bg-red-500 text-white rounded"
+                    <DraggablePopup>
+                        <div
+                            className="absolute bg-white text-black w-48 rounded p-2 cursor-move"
+                            style={{ boxShadow: `20px 20px 15px rgb(0 0 0 / 0.5)` }}
+                        >
+                            <p
+                                className="absolute top-[-6px] right-[-6px] flex items-center justify-center bg-white text-black
+                                    w-[25px] h-[25px] border-[1px] border-gray-500 rounded-full hover:bg-slate-400 hover:text-black cursor-pointer"
                                 onClick={() => setSelectedEarthquake(null)}
                             >
-                                Close
-                            </button>
+                                ✖
+                            </p>
+
+                            <h3>
+                                {selectedEarthquake.properties.place}
+                            </h3>
+
+                            <p>Magnitude: {selectedEarthquake.properties.mag}</p>
+                            <p>Depth: {selectedEarthquake.geometry.coordinates[2]} km</p>
                         </div>
-                    </Popup>
+                    </DraggablePopup>
                 )}
 
                 <ScaleControl position="bottom-right" />
