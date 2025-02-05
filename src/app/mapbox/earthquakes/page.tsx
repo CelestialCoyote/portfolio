@@ -3,14 +3,14 @@ import EarthquakesMap from "./EarthquakesMap";
 
 
 export const metadata = {
-    title: "Military Housing Allowance Map",
-    description: "Housing allowance rates for 2025 by zip code."
+    title: "Earthquakes Map",
+    description: "Showing earthquake locations around the globe."
 };
 
 const Earthquakes = async () => {
     return (
-        <main className="flex flex-col w-full h-screen px-[2%] pt-[60px] pb-[40px]">
-            <div className="flex justify-center items-center text-3xl font-bold my-2">
+        <main className="flex flex-col w-full h-screen px-[2%] pt-[20px] pb-[40px]">
+            <div className="flex justify-center items-center text-3xl font-bold mb-2">
                 Earthquakes Map
             </div>
 

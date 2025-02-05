@@ -4,24 +4,18 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
 import Map, { Layer, MapRef, Marker, Popup, Source } from "react-map-gl";
 import { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "./map-popup.module.css";
-
-// import TectonicPlates from "./_earthquake-components/TectonicPlateBoundaries.json";
+import "../_mapbox-components/map-popup.css";
+import { InitialViewState } from "../_mapbox-components/types/initialViewState";
+import { Earthquake, FeatureCollection } from "./types/earthquakeTypes";
+import { getColorByMagnitude } from "./_earthquake-utils/getColorByMagnitude";
+import { filterEarthquakesByDay } from "./_earthquake-utils/filterEarthQuakesByDay";
+import { formatTimestamp } from "./_earthquake-utils/formatTimeStamp";
 import PlateBoundaries from "./_earthquake-components/Tectonic_Plates.json";
 import ControlPanel from "./_earthquake-components/control-panel";
 import Skeleton from "../map-skeleton";
 
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
-interface InitialViewState {
-    longitude: number;
-    latitude: number;
-    projection: string;
-    zoom: number;
-    minZoom: number;
-    maxZoom: number;
-}
 
 const initialViewState: InitialViewState = {
     longitude: -98.583333,
@@ -32,52 +26,17 @@ const initialViewState: InitialViewState = {
     maxZoom: 18,
 }
 
-interface Earthquake {
-    id: string;
-    properties: {
-        mag: number;
-        place: string;
-        time: number; // Timestamp
-    };
-    geometry: {
-        coordinates: [number, number, number]; // [longitude, latitude, depth]
-    };
-}
-
-interface FeatureCollection {
-    type: "FeatureCollection";
-    features: Earthquake[];
-}
-
-const filterFeaturesByDay = (
-    featureCollection: FeatureCollection,
-    time: number
-): FeatureCollection => {
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-
-    const filteredFeatures = featureCollection.features.filter((feature) => {
-        const featureDate = new Date(feature.properties.time);
-        return (
-            featureDate.getFullYear() === year &&
-            featureDate.getMonth() === month &&
-            featureDate.getDate() === day
-        );
-    });
-
-    return { type: "FeatureCollection", features: filteredFeatures };
-}
 
 const EarthquakesMap: React.FC = () => {
     const mapRef = useRef<MapRef>(null);
     const [loading, setLoading] = useState(true);
     const [earthquakes, setEarthquakes] = useState<FeatureCollection | null>(null);
     const [selectedEarthquake, setSelectedEarthquake] = useState<Earthquake | null>(null);
+    const [hoveredEarthquake, setHoveredEarthquake] = useState<Earthquake | null>(null);
     const [allDays, setAllDays] = useState(true);
     const [timeRange, setTimeRange] = useState<[number, number]>([0, 0]);
     const [selectedTime, setSelectedTime] = useState(0);
+
 
     useEffect(() => {
         const fetchEarthquakeData = async () => {
@@ -92,10 +51,12 @@ const EarthquakesMap: React.FC = () => {
 
             try {
                 const response = await fetch(url);
+
                 if (!response.ok) throw new Error("Failed to fetch earthquake data");
 
                 const data: FeatureCollection = await response.json();
                 setEarthquakes(data);
+
                 const startTimeStamp = data.features[data.features.length - 1]?.properties.time;
                 const endTimeStamp = data.features[0]?.properties.time;
                 setTimeRange([startTimeStamp, endTimeStamp]);
@@ -110,7 +71,8 @@ const EarthquakesMap: React.FC = () => {
 
     const data = useMemo(() => {
         if (!earthquakes) return null;
-        return allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime);
+
+        return allDays ? earthquakes : filterEarthquakesByDay(earthquakes, selectedTime);
     }, [earthquakes, allDays, selectedTime]);
 
     if (!mapboxToken) {
@@ -122,28 +84,8 @@ const EarthquakesMap: React.FC = () => {
         );
     }
 
-    const getColorByMagnitude = (mag: number) => {
-        const colors = [
-            { mag: 2.0, color: "green" },
-            { mag: 3.0, color: "#88C057" },
-            { mag: 4.0, color: "yellow" },
-            { mag: 5.0, color: "#FFC100" },
-            { mag: 6.0, color: "orange" },
-            { mag: 7.0, color: "#FF4500" },
-            { mag: 8.0, color: "red" },
-            { mag: 9.0, color: "#B22222" },
-        ];
-
-        for (let i = colors.length - 1; i >= 0; i--) {
-            if (mag >= colors[i].mag) {
-                return colors[i].color;
-            }
-        }
-        return "green";
-    };
-
     return (
-        <div className="flex flex-row w-full h-full max-h-full gap-x-4">
+        <div className="w-full h-full max-h-full">
             {loading && <Skeleton message="Loading earthquakes map..." />}
 
             <Map
@@ -154,17 +96,6 @@ const EarthquakesMap: React.FC = () => {
                 style={{ borderRadius: 8 }}
                 onLoad={() => setLoading(false)}
             >
-                {/* <Source id="tectonic-plates-source" type="geojson" data={TectonicPlates}>
-                    <Layer
-                        id="tectonic-plates-layer"
-                        type="line"
-                        paint={{
-                            "line-color": "#FF5733",
-                            "line-width": 2,
-                        }}
-                    />
-                </Source> */}
-
                 <Source id="tectonic-plates-source" type="geojson" data={PlateBoundaries}>
                     <Layer
                         id="tectonic-plates-layer"
@@ -193,21 +124,48 @@ const EarthquakesMap: React.FC = () => {
                                     border: "1px solid white",
                                     cursor: "pointer",
                                 }}
+                                onMouseEnter={() => setHoveredEarthquake(quake)}
+                                onMouseLeave={() => setHoveredEarthquake(null)}
                             ></div>
                         </Marker>
                     ))}
 
+                {/* Hover Popup */}
+                {hoveredEarthquake && !selectedEarthquake && (
+                    <Popup
+                        longitude={hoveredEarthquake.geometry.coordinates[0]}
+                        latitude={hoveredEarthquake.geometry.coordinates[1]}
+                        closeButton={false}
+                        closeOnClick={false}
+                        offset={10}
+                    >
+                        <div className="bg-gray-800 text-white p-1 text-sm">
+                            <h3>{hoveredEarthquake.properties.place}</h3>
+                            <p>Magnitude: {hoveredEarthquake.properties.mag}</p>
+                            <p>{formatTimestamp(hoveredEarthquake.properties.time)}</p>
+                        </div>
+                    </Popup>
+                )}
+
+                {/* Click Popup */}
                 {selectedEarthquake && (
                     <Popup
                         longitude={selectedEarthquake.geometry.coordinates[0]}
                         latitude={selectedEarthquake.geometry.coordinates[1]}
                         onClose={() => setSelectedEarthquake(null)}
                         closeOnClick={false}
+                        offset={10}
                     >
-                        <div className="bg-slate-400 text-black p-1">
+                        <div className="bg-gray-800 text-white p-2 text-sm">
                             <h3>{selectedEarthquake.properties.place}</h3>
                             <p>Magnitude: {selectedEarthquake.properties.mag}</p>
                             <p>Depth: {selectedEarthquake.geometry.coordinates[2]} km</p>
+                            <button
+                                className="mt-1 px-2 py-1 bg-red-500 text-white rounded"
+                                onClick={() => setSelectedEarthquake(null)}
+                            >
+                                Close
+                            </button>
                         </div>
                     </Popup>
                 )}
