@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Map, { MapRef, Layer, Source } from "react-map-gl";
 import { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "@/components/mapbox.css";
+import "../_mapbox-components/map-popup.css";
 
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
