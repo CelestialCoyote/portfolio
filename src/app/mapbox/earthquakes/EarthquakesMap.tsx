@@ -160,18 +160,6 @@ const EarthquakesMap: React.FC = () => {
                             })()}
 
                             <div className="pt-[10px] px-[5px]">
-                                {/* Get formatted date and time */}
-                                {(() => {
-                                    const { date, time } = formatTimestamp(hoveredEarthquake.properties.time);
-                                    
-                                    return (
-                                        <>
-                                            <p>{date}</p>
-                                            <p>{time}</p>
-                                        </>
-                                    );
-                                })()}
-
                                 <p>{hoveredEarthquake.properties.mag} Magnitude</p>
 
                                 <p className="text-center text-blue-400 py-[3px]">Click for more details</p>
@@ -195,9 +183,35 @@ const EarthquakesMap: React.FC = () => {
                                 ✖
                             </p>
 
-                            <h3>
-                                {selectedEarthquake.properties.place}
-                            </h3>
+                            {/* Split place into two lines */}
+                            {(() => {
+                                const placeParts = selectedEarthquake.properties.place.split(" of ");
+
+                                return (
+                                    <h3 className="bg-gray-300 text-[16px] text-center mb-[5px]">
+                                        {placeParts.length > 1 ? (
+                                            <>
+                                                {placeParts[0]} of <br />
+                                                {placeParts[1]}
+                                            </>
+                                        ) : (
+                                            selectedEarthquake.properties.place
+                                        )}
+                                    </h3>
+                                );
+                            })()}
+
+                            {/* Get formatted date and time */}
+                            {(() => {
+                                const { date, time } = formatTimestamp(selectedEarthquake.properties.time);
+
+                                return (
+                                    <>
+                                        <p>{date}</p>
+                                        <p>{time}</p>
+                                    </>
+                                );
+                            })()}
 
                             <p>Magnitude: {selectedEarthquake.properties.mag}</p>
                             <p>Depth: {selectedEarthquake.geometry.coordinates[2]} km</p>
