@@ -141,22 +141,11 @@ const EarthquakesMap: React.FC = () => {
                         offset={10}
                     >
                         <div className="bg-gray-800 text-white text-center text-sm">
-                            {/* Split place into two lines */}
+                            {/* Get formatted date and time */}
                             {(() => {
-                                const placeParts = hoveredEarthquake.properties.place.split(" of ");
+                                const { date } = formatTimestamp(hoveredEarthquake.properties.time);
 
-                                return (
-                                    <h3 className="bg-gray-500 mb-[5px]">
-                                        {placeParts.length > 1 ? (
-                                            <>
-                                                {placeParts[0]} of <br />
-                                                {placeParts[1]}
-                                            </>
-                                        ) : (
-                                            hoveredEarthquake.properties.place
-                                        )}
-                                    </h3>
-                                );
+                                return <h3 className="bg-gray-400 text-center text-lg">{date}</h3>
                             })()}
 
                             <div className="pt-[10px] px-[5px]">
@@ -176,7 +165,7 @@ const EarthquakesMap: React.FC = () => {
                             style={{ boxShadow: `20px 20px 15px rgb(0 0 0 / 0.5)` }}
                         >
                             <p
-                                className="absolute top-[-6px] right-[-6px] flex items-center justify-center bg-white text-black
+                                className="absolute top-[-12px] right-[-12px] flex items-center justify-center bg-white text-black
                                     w-[25px] h-[25px] border-[1px] border-gray-500 rounded-full hover:bg-slate-400 hover:text-black cursor-pointer"
                                 onClick={() => setSelectedEarthquake(null)}
                             >
