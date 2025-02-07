@@ -26,4 +26,18 @@ export const navData = [
 			},
 		],
 	},
+	{
+		id: 2,
+		label: "Three.js",
+		submenu: true,
+		link: "#",
+		auth: false,
+		sublinks: [
+			{
+				id: 0,
+				label: "Earth View",
+				link: "/threejs/earth-view"
+			},
+		],
+	},
 ];
