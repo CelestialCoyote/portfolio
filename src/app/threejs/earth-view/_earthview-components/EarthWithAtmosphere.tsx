@@ -5,13 +5,13 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
-import earthVertexShader from "./_shaders/earth/vertex.glsl";
-import earthFragmentShader from "./_shaders/earth/fragment.glsl";
-import atmosphereVertexShader from "./_shaders/atmosphere/vertex.glsl";
-import atmosphereFragmentShader from "./_shaders/atmosphere/fragment.glsl";
+import earthVertexShader from "../_shaders/earth/vertex.glsl";
+import earthFragmentShader from "../_shaders/earth/fragment.glsl";
+import atmosphereVertexShader from "../_shaders/atmosphere/vertex.glsl";
+import atmosphereFragmentShader from "../_shaders/atmosphere/fragment.glsl";
 
 
-const EarthJourney: React.FC = () => {
+const EarthWithAtmosphere: React.FC = () => {
     const earthRef = useRef<THREE.Mesh>(null!);
     const atmosphereRef = useRef<THREE.Mesh>(null!);
 
@@ -34,8 +34,8 @@ const EarthJourney: React.FC = () => {
             uNightTexture: { value: nightTexture },
             uSpecularCloudsTexture: { value: specularCloudsTexture },
             uSunDirection: { value: new THREE.Vector3(0, 0, 1) },
-            uAtmosphereDayColor: { value: new THREE.Color("#00aaff") },
-            uAtmosphereTwilightColor: { value: new THREE.Color("#ff6600") }
+            uAtmosphereDayColor: { value: new THREE.Color("#0055ff") },
+            uAtmosphereTwilightColor: { value: new THREE.Color("#883300") }
         }),
         [dayTexture, nightTexture, specularCloudsTexture]
     );
@@ -74,4 +74,4 @@ const EarthJourney: React.FC = () => {
     );
 }
 
-export default EarthJourney;
+export default EarthWithAtmosphere;

@@ -4,7 +4,7 @@ import React from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import CameraControls from "@/app/threejs/_threejs-components/CameraControls";
-import EarthJourney from "./EarthJourney"
+import EarthWithAtmosphere from "./_earthview-components/EarthWithAtmosphere"
 
 
 const EarthViewCanvas: React.FC = () => {
@@ -26,7 +26,7 @@ const EarthViewCanvas: React.FC = () => {
                 <ambientLight intensity={0.8} />
                 <directionalLight position={[0, 0, 5]} color="white" />
                 <CameraControls />
-                <EarthJourney />
+                <EarthWithAtmosphere />
             </Canvas>
         </div>
     );
