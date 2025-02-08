@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+import { NextConfig } from 'next';
+
+
+const nextConfig: NextConfig = {
     images: {
         remotePatterns: [
             {
@@ -24,6 +27,13 @@ const nextConfig = {
             },
         ],
     },
+    webpack: (config) => {
+		config.module.rules.push({
+			test: /\.glsl$/,
+			use: "raw-loader",
+		});
+		return config;
+	},
 }
 
 export default nextConfig;
