@@ -3,10 +3,8 @@
 import React from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import SunLight from "./_earthview-components/SunLight";
-import Starfield from "./_earthview-components/StarField";
-import EarthWithAtmosphere from "./_earthview-components/EarthWithAtmosphere";
+import CameraControls from "@/app/threejs/_threejs-components/CameraControls";
+import EarthWithAtmosphere from "./_earthview-components/EarthWithAtmosphere"
 
 
 const EarthViewCanvas: React.FC = () => {
@@ -21,20 +19,13 @@ const EarthViewCanvas: React.FC = () => {
                 camera={{
                     fov: 45,
                     near: 0.1,
-                    far: 1000,
-                    position: [0, 0, 30]
+                    far: 200,
+                    position: [12, 5, 6]
                 }}
             >
-                <OrbitControls />
-
-                {/* Ambient light for overall brightness */}
-                <ambientLight intensity={0.1} />
-
-                {/* Directional Light simulating the Sun */}
-                <SunLight />
-
-                <Starfield numStars={1000} />
-                
+                <ambientLight intensity={0.8} />
+                <directionalLight position={[0, 0, 5]} color="white" />
+                <CameraControls />
                 <EarthWithAtmosphere />
             </Canvas>
         </div>

@@ -2,11 +2,17 @@ import React from "react";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import Technologies from "@/components/Technologies/Technologies";
+import FloatingSpheresCanvas from "./threejs/floating-spheres/FloatingSpheresCanvas";
 
 
 const Home: React.FC = () => {
 	return (
 		<main className="flex flex-col items-center mb-12 py-16 gap-y-10">
+			{/* Background Three.js Canvas */}
+            <div className="fixed top-0 left-0 w-full h-full z-[-1]">
+                <FloatingSpheresCanvas />
+            </div>
+			
 			<div className="flex flex-col items-center w-full mt-10 mb-4">
 				<h1 className="text-4xl font-bold mb-8">
 					Paul Stearns

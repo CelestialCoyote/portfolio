@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
@@ -32,30 +34,24 @@ const EarthWithAtmosphere: React.FC = () => {
             uNightTexture: { value: nightTexture },
             uSpecularCloudsTexture: { value: specularCloudsTexture },
             uSunDirection: { value: new THREE.Vector3(0, 0, 1) },
-            uAtmosphereDayColor: { value: new THREE.Color("#0000ff") },
-            uAtmosphereTwilightColor: { value: new THREE.Color("#993300") }
+            uAtmosphereDayColor: { value: new THREE.Color("#0055ff") },
+            uAtmosphereTwilightColor: { value: new THREE.Color("#883300") }
         }),
         [dayTexture, nightTexture, specularCloudsTexture]
     );
 
-    // Rotate the Earth around its tilted axis
+    // Rotate the Earth
     useFrame(({ clock }) => {
         if (earthRef.current) {
-            const elapsedTime = clock.getElapsedTime();
-
-            earthRef.current.rotation.y = elapsedTime * 0.02; // Rotation speed
-            earthRef.current.rotation.x = THREE.MathUtils.degToRad(23.5); // Axial tilt
+            earthRef.current.rotation.y = clock.getElapsedTime() * 0.1;
         }
     });
 
     return (
-        <group
-            ref={earthRef}
-            rotation={[THREE.MathUtils.degToRad(23.5), 0, 0]}
-        >
+        <>
             {/* Earth */}
-            <mesh>
-                <sphereGeometry args={[7.9262, 64, 64]} />
+            <mesh ref={earthRef}>
+                <sphereGeometry args={[2, 64, 64]} />
                 <shaderMaterial
                     vertexShader={earthVertexShader}
                     fragmentShader={earthFragmentShader}
@@ -65,7 +61,7 @@ const EarthWithAtmosphere: React.FC = () => {
 
             {/* Atmosphere */}
             <mesh ref={atmosphereRef} scale={1.04}>
-                <sphereGeometry args={[7.9262, 64, 64]} />
+                <sphereGeometry args={[2, 64, 64]} />
                 <shaderMaterial
                     vertexShader={atmosphereVertexShader}
                     fragmentShader={atmosphereFragmentShader}
@@ -74,19 +70,7 @@ const EarthWithAtmosphere: React.FC = () => {
                     transparent
                 />
             </mesh>
-
-            {/* North Pole (Blue) */}
-            <mesh position={[0, 4.5, 0]}>
-                <cylinderGeometry args={[0.05, 0.05, 9, 16]} />
-                <meshBasicMaterial color="blue" />
-            </mesh>
-
-            {/* South Pole (Red) */}
-            <mesh position={[0, -4.5, 0]} >
-                <cylinderGeometry args={[0.05, 0.05, 9, 16]} />
-                <meshBasicMaterial color="red" />
-            </mesh>
-        </group>
+        </>
     );
 }
 

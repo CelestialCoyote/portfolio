@@ -38,6 +38,16 @@ export const navData = [
 				label: "Earth View",
 				link: "/threejs/earth-view"
 			},
+			{
+				id: 1,
+				label: "Shader Cubes",
+				link: "/threejs/three-cube"
+			},
+			{
+				id: 2,
+				label: "Spiral Shader",
+				link: "/threejs/spiral"
+			},
 		],
 	},
 ];

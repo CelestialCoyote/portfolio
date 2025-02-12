@@ -56,6 +56,11 @@
                 "title": "CSS3",
                 "src": "/images/tech-icons/css-3.svg",
                 "alt": "css3-icon"
+            },
+            {
+                "title": "Three",
+                "src": "/images/tech-icons/threejs.svg",
+                "alt": "threejs-icon"
             }
         ]
     },
