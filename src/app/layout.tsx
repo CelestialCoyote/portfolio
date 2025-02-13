@@ -6,7 +6,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
     title: "Paul Stearns Portfolio",
-    description: "Full Stack Developer portfolio",
+    description: "Full Stack Developer Portfolio",
 };
 
 export default function RootLayout({
