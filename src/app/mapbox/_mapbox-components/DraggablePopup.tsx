@@ -14,7 +14,7 @@ const DraggablePopup: React.FC<DraggablePopupProps> = ({ children }) => {
 
     useEffect(() => {
         const setInitialPosition = () => {
-            setPosition({ x: 25, y: window.innerHeight - 500 }); // Popup appears in lower left corner.
+            setPosition({ x: 25, y: window.innerHeight - 400 }); // Popup appears in lower left corner.
         };
 
         if (typeof window !== "undefined") {

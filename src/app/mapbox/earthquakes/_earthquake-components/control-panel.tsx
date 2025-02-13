@@ -34,26 +34,32 @@ export default function ControlPanel({
 	};
 
 	return (
-		<div className="bg-slate-300 text-black w-84 rounded-lg p-4">
-			<h3 className="text-2xl font-bold mb-1">Earthquakes:</h3>
+		<div className="bg-slate-200 text-black w-84 rounded-lg p-4">
+			<div className="text-center">
+				<h3 className="text-2xl font-bold mb-1">
+					Earthquakes:
+				</h3>
 
-			<p className="text-black text-lg mb-2">
-				Map showing earthquakes from
-				<br />
-				<b>{formatTime(startTime)}</b> to <b>{formatTime(endTime)}</b>.
-			</p>
+				<p className="text-black text-lg mb-2">
+					Showing earthquakes from
+				</p>
+
+				<p className="text-black text-lg font-bold mb-2">
+					{formatTime(startTime)} to {formatTime(endTime)}
+				</p>
+			</div>
 
 			<hr className="border-black border-2 my-2" />
 
 			<div className="flex items-center gap-x-4">
-				<label>All Days</label>
-
 				<input
 					type="checkbox"
 					name="allday"
 					checked={allDays}
 					onChange={(evt) => onChangeAllDays(evt.target.checked)}
 				/>
+				
+				<label>Show All Days</label>
 			</div>
 
 			<div className={`flex items-center ${allDays ? "opacity-50" : ""}`}>
@@ -74,10 +80,15 @@ export default function ControlPanel({
 
 			<hr className="border-black border-2 my-2" />
 
-			<p className="text-black mt-2">
-				Data source:{" "}
-				<Link href="https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson">
-					earthquakes.geojson
+			<p className="flex flex-col text-black mt-2">
+				Data source:
+
+				<Link
+					href="https://www.usgs.gov/programs/earthquake-hazards"
+					className="text-blue-500 hover:bg-blue-200"
+					target="_blank"
+				>
+					https://www.usgs.gov/programs/earthquake-hazards
 				</Link>
 			</p>
 		</div>
