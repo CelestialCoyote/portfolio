@@ -52,12 +52,17 @@ const Spiral3D: React.FC = () => {
         }
 
         const geom = new THREE.BufferGeometry();
+        
         geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
         return geom;
     }, []);
 
     return (
-        <mesh ref={meshRef} geometry={geometry} material={shaderMaterial.current ?? undefined} />
+        <mesh
+            ref={meshRef}
+            geometry={geometry}
+            material={shaderMaterial.current ?? undefined}
+        />
     );
 }
 
