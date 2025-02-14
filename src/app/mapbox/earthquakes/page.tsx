@@ -1,5 +1,7 @@
 import React from "react";
+import Link from "next/link";
 import EarthquakesMap from "./EarthquakesMap";
+import Title from "../_mapbox-components/TitleDescription";
 
 
 export const metadata = {
@@ -10,9 +12,26 @@ export const metadata = {
 const Earthquakes = async () => {
     return (
         <main className="flex flex-col w-full h-screen px-[2%] pt-[20px] pb-[40px]">
-            <div className="flex justify-center items-center text-3xl font-bold mb-2">
-                Earthquakes Map
-            </div>
+            <Title
+                title="Earthquakes Map"
+                description={
+                    <div>
+                        <p>This map displays real-time earthquake activity worldwide.</p>
+                        
+                        <p>Click on markers to view details.</p>
+
+                        <div>
+                            For more information, visit the{" "}
+                            <Link
+                                href="https://earthquake.usgs.gov"
+                                className="text-blue-500 hover:underline"
+                            >
+                                USGS Earthquake Portal
+                            </Link>.
+                        </div>
+                    </div>
+                }
+            />
 
             <div className="h-[85%] max-h-[85%]">
                 <EarthquakesMap />
@@ -20,6 +39,5 @@ const Earthquakes = async () => {
         </main>
     );
 }
-
 
 export default Earthquakes;

@@ -11,9 +11,9 @@ import { getColorByMagnitude } from "./_earthquake-utils/getColorByMagnitude";
 import { filterEarthquakesByDay } from "./_earthquake-utils/filterEarthQuakesByDay";
 import { formatTimestamp } from "./_earthquake-utils/formatTimeStamp";
 import PlateBoundaries from "./_earthquake-components/Tectonic_Plates.json";
-import ControlPanel from "./_earthquake-components/control-panel";
+import EarthquakeControlPanel from "./_earthquake-components/EarthquakeControlPanel";
 import DraggablePopup from "../_mapbox-components/DraggablePopup";
-import Skeleton from "../map-skeleton";
+// import Skeleton from "../map-skeleton";
 
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -30,14 +30,13 @@ const initialViewState: InitialViewState = {
 
 const EarthquakesMap: React.FC = () => {
     const mapRef = useRef<MapRef>(null);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [earthquakes, setEarthquakes] = useState<FeatureCollection | null>(null);
     const [selectedEarthquake, setSelectedEarthquake] = useState<Earthquake | null>(null);
     const [hoveredEarthquake, setHoveredEarthquake] = useState<Earthquake | null>(null);
     const [allDays, setAllDays] = useState(true);
     const [timeRange, setTimeRange] = useState<[number, number]>([0, 0]);
     const [selectedTime, setSelectedTime] = useState(0);
-
 
     useEffect(() => {
         const fetchEarthquakeData = async () => {
@@ -60,6 +59,7 @@ const EarthquakesMap: React.FC = () => {
 
                 const startTimeStamp = data.features[data.features.length - 1]?.properties.time;
                 const endTimeStamp = data.features[0]?.properties.time;
+
                 setTimeRange([startTimeStamp, endTimeStamp]);
                 setSelectedTime(endTimeStamp);
             } catch (error) {
@@ -87,7 +87,7 @@ const EarthquakesMap: React.FC = () => {
 
     return (
         <div className="w-full h-full max-h-full">
-            {loading && <Skeleton message="Loading earthquakes map..." />}
+            {/* {loading && <Skeleton message="Loading earthquakes map..." />} */}
 
             <Map
                 initialViewState={initialViewState}
@@ -95,7 +95,7 @@ const EarthquakesMap: React.FC = () => {
                 mapboxAccessToken={mapboxToken}
                 ref={mapRef}
                 style={{ borderRadius: 8 }}
-                onLoad={() => setLoading(false)}
+                // onLoad={() => setLoading(false)}
             >
                 <Source id="tectonic-plates-source" type="geojson" data={PlateBoundaries}>
                     <Layer
@@ -140,7 +140,7 @@ const EarthquakesMap: React.FC = () => {
                         closeOnClick={false}
                         offset={10}
                     >
-                        <div className="bg-gray-800 text-white text-center text-sm">
+                        <div className="bg-gray-200 text-black text-center text-sm">
                             {/* Get formatted date and time */}
                             {(() => {
                                 const { date } = formatTimestamp(hoveredEarthquake.properties.time);
@@ -159,14 +159,14 @@ const EarthquakesMap: React.FC = () => {
 
                 {/* Click Popup */}
                 {selectedEarthquake && (
-                    <DraggablePopup>
+                    <DraggablePopup xPos={20} yPos={350}>
                         <div
-                            className="absolute bg-white text-black w-48 rounded p-2 cursor-move"
+                            className="absolute bg-white/35 w-[200px] rounded p-2 cursor-move"
                             style={{ boxShadow: `20px 20px 15px rgb(0 0 0 / 0.5)` }}
                         >
                             <p
-                                className="absolute top-[-12px] right-[-12px] flex items-center justify-center bg-white text-black
-                                    w-[25px] h-[25px] border-[1px] border-gray-500 rounded-full hover:bg-slate-400 hover:text-black cursor-pointer"
+                                className="absolute top-[-12px] right-[-12px] flex items-center justify-center bg-white/50 text-black
+                                    w-[25px] h-[25px] border-[1px] border-gray-500 rounded-full hover:bg-slate-300 hover:text-black cursor-pointer"
                                 onClick={() => setSelectedEarthquake(null)}
                             >
                                 ✖
@@ -177,7 +177,7 @@ const EarthquakesMap: React.FC = () => {
                                 const placeParts = selectedEarthquake.properties.place.split(" of ");
 
                                 return (
-                                    <h3 className="bg-gray-300 text-[16px] text-center mb-[5px]">
+                                    <h3 className="bg-gray-300 text-gray-600 text-[16px] text-center mb-[5px]">
                                         {placeParts.length > 1 ? (
                                             <>
                                                 {placeParts[0]} of <br />
@@ -212,8 +212,9 @@ const EarthquakesMap: React.FC = () => {
                 <GeolocateControl position="bottom-right" />
                 <NavigationControl position="bottom-right" />
 
-                <div className="absolute top-4 right-4">
-                    <ControlPanel
+                {/* <div className="absolute top-4 right-4"> */}
+                <div className="absolute top-4 right-4 md:bottom-4 md:right-auto md:left-4">
+                    <EarthquakeControlPanel
                         startTime={timeRange[0]}
                         endTime={timeRange[1]}
                         selectedTime={selectedTime}
