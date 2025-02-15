@@ -11,7 +11,8 @@ export const metadata = {
 
 const Earthquakes = async () => {
     return (
-        <main className="flex flex-col w-full h-screen px-[2%] pt-[20px] pb-[40px]">
+        // <main className="flex flex-col w-full h-screen px-[2%] pt-[20px] pb-[40px]">
+        <main className="w-full h-[calc(100vh-96px)] p-[1%]">
             <Title
                 title="Earthquakes Map"
                 description={
@@ -33,7 +34,7 @@ const Earthquakes = async () => {
                 }
             />
 
-            <div className="h-[85%] max-h-[85%]">
+            <div className="h-[93%] max-h-[93%]">
                 <EarthquakesMap />
             </div>
         </main>

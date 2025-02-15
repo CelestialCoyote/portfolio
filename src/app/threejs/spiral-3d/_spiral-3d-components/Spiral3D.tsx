@@ -36,24 +36,27 @@ const Spiral3D: React.FC = () => {
 
     // Create geometry only once
     const geometry = useMemo(() => {
-        const numRings = 50;
-        const numSegments = 100;
+        const numRings = 25;
+        const numSegments = 75;
         const positions = [];
 
         for (let i = 0; i < numRings; i++) {
             const radius = (i / numRings) * 1.0;
+
             for (let j = 0; j < numSegments; j++) {
                 const angle = (j / numSegments) * Math.PI * 2;
                 const x = radius * Math.cos(angle);
                 const y = radius * Math.sin(angle);
                 const z = 0; // Will be modified in shader
+
                 positions.push(x, y, z);
             }
         }
 
         const geom = new THREE.BufferGeometry();
-        
+
         geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+
         return geom;
     }, []);
 

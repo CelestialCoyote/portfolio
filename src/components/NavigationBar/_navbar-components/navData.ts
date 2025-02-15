@@ -48,11 +48,11 @@ export const navData = [
 				label: "Spiral Shader",
 				link: "/threejs/spiral"
 			},
-			{
-				id: 3,
-				label: "3D Spiral",
-				link: "/threejs/spiral-3d"
-			},
+			// {
+			// 	id: 3,
+			// 	label: "3D Spiral",
+			// 	link: "/threejs/spiral-3d"
+			// },
 		],
 	},
 ];

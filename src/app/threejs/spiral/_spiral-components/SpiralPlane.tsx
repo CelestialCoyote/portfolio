@@ -15,6 +15,7 @@ const SpiralPlane: React.FC = () => {
             uTime: { value: 0.0 },
             uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
         },
+        side: THREE.DoubleSide,
     }), []);
 
     useFrame(({ clock }) => {

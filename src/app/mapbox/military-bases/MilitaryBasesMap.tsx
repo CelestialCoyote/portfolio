@@ -6,6 +6,8 @@ import { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../_mapbox-components/map-popup.css";
 
+import { InitialViewState } from "../_mapbox-components/types/initialViewState";
+
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
@@ -15,14 +17,6 @@ import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-s
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-interface InitialViewState {
-    longitude: number;
-    latitude: number;
-    projection: string;
-    zoom: number;
-    minZoom: number;
-    maxZoom: number;
-}
 
 const initialViewState: InitialViewState = {
     longitude: -98.583333,
@@ -102,6 +96,6 @@ const MilitaryBasesMap: React.FC = () => {
             )}
         </div>
     );
-};
+}
 
 export default MilitaryBasesMap;
