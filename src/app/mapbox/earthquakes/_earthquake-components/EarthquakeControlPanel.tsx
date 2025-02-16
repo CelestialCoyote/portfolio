@@ -200,7 +200,7 @@ const EarthquakeControlPanel: React.FC<ControlPanelProps> = ({
 	}
 
 	return (
-		<div className="bg-white/35 backdrop-blur-md shadow-lg rounded-lg p-4 w-84">
+		<div className="bg-white/35 backdrop-blur-md w-[325px] h-[300px] shadow-lg rounded-lg p-4">
 			<div className="text-center">
 				<h3 className="text-2xl font-bold mb-1">
 					Earthquakes:

@@ -10,7 +10,7 @@ import { InitialViewState } from "../_mapbox-components/types/initialViewState";
 
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
-import GridLines from "../_mapbox-components/GridLines";
+import GridLinesMercator from "../_mapbox-components/GridLinesMercator/GridLinesMercator";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
 import BaseMarkerDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
 import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-style";
@@ -93,27 +93,17 @@ const MilitaryBasesMap: React.FC = () => {
                         />
                     </div>
 
-                    <GridLines
+                    <GridLinesMercator
                         mapRef={mapRef}
-                        interval={10}  // Set the interval for grid lines
+                        interval={10}
                         visible={true}
-                        labelColor="#000"  // Label color
-                        labelFontSize={12}  // Font size for labels
+                        labelColor="#000"
+                        labelFontSize={12}
                         equatorLineColor="#FF5733"
                         equatorLineWidth={3.0}
                         primeMeridianLineColor="#4A90E2"
                         primeMeridianLineWidth={3.0}
                     />
-
-                    {/* <GridLines
-                        mapRef={mapRef}
-                        interval={5}
-                        visible={true}
-                        equatorLineColor="#FF5733"  // Orange color for equator
-                        equatorLineWidth={3.0}      // Bolder width for equator
-                        primeMeridianLineColor="#4A90E2"  // Blue color for prime meridian
-                        primeMeridianLineWidth={3.0}      // Bolder width for prime meridian
-                    /> */}
                 </Map>
             )}
         </div>

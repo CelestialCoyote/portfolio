@@ -14,7 +14,7 @@ import PlateBoundaries from "./_earthquake-components/PB2002_boundaries.json";
 // import PlateBoundaries from "./_earthquake-components/PB2002_plates.json";
 import EarthquakeControlPanel from "./_earthquake-components/EarthquakeControlPanel";
 import DraggablePopup from "../_mapbox-components/DraggablePopup";
-import GridLines from "../_mapbox-components/GridLinesGlobe";
+import GridLinesGlobe from "../_mapbox-components/GridLinesGlobe/GridLinesGlobe";
 
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -204,7 +204,7 @@ const EarthquakesMap: React.FC = () => {
                 <GeolocateControl position="bottom-right" />
                 <NavigationControl position="bottom-right" />
 
-                <div className="absolute top-4 right-4 md:bottom-4">
+                <div className="absolute top-2 right-2">
                     <EarthquakeControlPanel
                         startTime={timeRange[0]}
                         endTime={timeRange[1]}
@@ -215,7 +215,15 @@ const EarthquakesMap: React.FC = () => {
                     />
                 </div>
 
-                <GridLines mapRef={mapRef} interval={5} visible={true} />
+                <GridLinesGlobe
+                        mapRef={mapRef}
+                        interval={10}
+                        visible={true}
+                        equatorLineColor="#FF5733"
+                        equatorLineWidth={3.0}
+                        primeMeridianLineColor="#4A90E2"
+                        primeMeridianLineWidth={3.0}
+                    />
             </Map>
         </div>
     );
