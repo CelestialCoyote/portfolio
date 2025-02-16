@@ -10,7 +10,7 @@ import { InitialViewState } from "../_mapbox-components/types/initialViewState";
 
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
-import GridLinesMercator from "../_mapbox-components/GridLinesMercator/GridLinesMercator";
+import MercatorGridLines from "../_mapbox-components/GridLinesMercator/MercatorGridLines";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
 import BaseMarkerDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
 import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-style";
@@ -93,16 +93,16 @@ const MilitaryBasesMap: React.FC = () => {
                         />
                     </div>
 
-                    <GridLinesMercator
+                    <MercatorGridLines
                         mapRef={mapRef}
                         interval={10}
                         visible={true}
-                        labelColor="#000"
-                        labelFontSize={12}
                         equatorLineColor="#FF5733"
                         equatorLineWidth={3.0}
                         primeMeridianLineColor="#4A90E2"
                         primeMeridianLineWidth={3.0}
+                        labelColor="#000"
+                        labelFontSize={12}
                     />
                 </Map>
             )}

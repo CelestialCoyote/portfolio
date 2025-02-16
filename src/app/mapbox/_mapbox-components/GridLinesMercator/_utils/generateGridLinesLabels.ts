@@ -44,7 +44,7 @@ export const generateGridLines = (interval: number): FeatureCollection<LineStrin
 }
 
 
-export const generateLabels = (interval: number): FeatureCollection<Point> => {
+export const generateGridLabels = (interval: number): FeatureCollection<Point> => {
     const labels: FeatureCollection<Point> = {
         type: "FeatureCollection",
         features: [],

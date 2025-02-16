@@ -1,4 +1,4 @@
-import { FeatureCollection, LineString } from "geojson";
+import { FeatureCollection, LineString, Point } from "geojson";
 
 
 export const generateGlobeLines = (interval: number): FeatureCollection<LineString> => {
@@ -35,4 +35,37 @@ export const generateGlobeLines = (interval: number): FeatureCollection<LineStri
     }
 
     return lines;
+}
+
+export const generateGlobeLabels = (interval: number): FeatureCollection<Point> => {
+    const labels: FeatureCollection<Point> = {
+        type: "FeatureCollection",
+        features: [],
+    }
+
+    // Longitude Labels (-180 to 180)
+    for (let lon = -180; lon <= 180; lon += interval) {
+        labels.features.push({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [lon, 0], // Longitude and Latitude at the equator
+            },
+            properties: { label: lon.toString() },
+        });
+    }
+
+    // Latitude Labels (-90 to 90)
+    for (let lat = -90; lat <= 90; lat += interval) {
+        labels.features.push({
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [0, lat], // Longitude and Latitude at the prime meridian
+            },
+            properties: { label: lat.toString() },
+        });
+    }
+
+    return labels;
 }
