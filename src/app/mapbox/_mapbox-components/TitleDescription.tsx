@@ -13,7 +13,7 @@ const Title: React.FC<TitleProps> = ({ title, description }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col flex-shrink-0 items-center w-full">
             <div className="flex items-center gap-6 text-3xl font-bold mb-2">
                 {title}
 
@@ -21,6 +21,7 @@ const Title: React.FC<TitleProps> = ({ title, description }) => {
                     onClick={() => setIsExpanded(!isExpanded)}
                     className="text-blue-500 transition-transform transform hover:scale-125 hover:text-blue-300"
                     aria-label="Toggle information"
+                    title="Map details"
                 >
                     <FaInfoCircle size={24} />
                 </button>

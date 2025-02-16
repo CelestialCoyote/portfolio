@@ -10,6 +10,7 @@ import { InitialViewState } from "../_mapbox-components/types/initialViewState";
 
 import Skeleton from "../map-skeleton";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
+import GridLines from "../_mapbox-components/GridLines";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
 import BaseMarkerDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
 import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-style";
@@ -22,7 +23,7 @@ const initialViewState: InitialViewState = {
     longitude: -98.583333,
     latitude: 39.833333,
     projection: "mercator",
-    zoom: 3.5,
+    zoom: 4.0,
     minZoom: 2.5,
     maxZoom: 18
 };
@@ -51,17 +52,16 @@ const MilitaryBasesMap: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-row w-full h-full max-h-full gap-x-4">
+        <div className="flex flex-grow w-full h-full max-h-full">
             {/* Show the Skeleton or the Map */}
             {loading ? (
                 <Skeleton message="Loading military bases map..." />
             ) : (
                 <Map
+                    ref={mapRef}
                     initialViewState={initialViewState}
-                    minZoom={2}
                     mapStyle="mapbox://styles/mapbox/streets-v12"
                     mapboxAccessToken={mapboxToken}
-                    ref={mapRef}
                     style={{ borderRadius: 8 }}
                 >
                     <Source type="vector" url="mapbox://celestialcoyote.2xl084fl">
@@ -92,6 +92,28 @@ const MilitaryBasesMap: React.FC = () => {
                             mapRef={mapRef}
                         />
                     </div>
+
+                    <GridLines
+                        mapRef={mapRef}
+                        interval={10}  // Set the interval for grid lines
+                        visible={true}
+                        labelColor="#000"  // Label color
+                        labelFontSize={12}  // Font size for labels
+                        equatorLineColor="#FF5733"
+                        equatorLineWidth={3.0}
+                        primeMeridianLineColor="#4A90E2"
+                        primeMeridianLineWidth={3.0}
+                    />
+
+                    {/* <GridLines
+                        mapRef={mapRef}
+                        interval={5}
+                        visible={true}
+                        equatorLineColor="#FF5733"  // Orange color for equator
+                        equatorLineWidth={3.0}      // Bolder width for equator
+                        primeMeridianLineColor="#4A90E2"  // Blue color for prime meridian
+                        primeMeridianLineWidth={3.0}      // Bolder width for prime meridian
+                    /> */}
                 </Map>
             )}
         </div>

@@ -12,7 +12,7 @@ export const basesFill: LayerProps = {
     id: "bases-fill",
     type: "fill",
     "source-layer": "us-military-bases-73wtm7",
-    minzoom: 2,
+    minzoom: 4,
     maxzoom: 16,
     paint: {
         "fill-outline-color": "rgba(0, 0, 0, 1.0)",

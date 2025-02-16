@@ -12,29 +12,24 @@ type ZoomLevelDisplayProps = {
         minZoom: number;
         maxZoom: number;
     };
-};
-
+}
 
 const ZoomLevelDisplay: React.FC<ZoomLevelDisplayProps> = ({ mapRef, initialViewState }) => {
-    const [zoomLevel, setZoomLevel] = useState(3.5);
+    const [zoomLevel, setZoomLevel] = useState(initialViewState.zoom);
 
     useEffect(() => {
+        const mapInstance = mapRef.current?.getMap();
+        
+        if (!mapInstance) return;
+
         const handleZoom = () => {
-            if (mapRef.current) {
-                const currentZoom = mapRef.current.getMap().getZoom();
+            setZoomLevel(mapInstance.getZoom()); // Update zoom state
+        }
 
-                setZoomLevel(currentZoom);
-            }
-        };
+        mapInstance.on("zoom", handleZoom);
 
-        if (mapRef.current) {
-            const mapInstance = mapRef.current.getMap();
-
-            mapInstance.on('zoom', handleZoom);
-
-            return () => {
-                mapInstance.off('zoom', handleZoom);
-            };
+        return () => {
+            mapInstance.off("zoom", handleZoom);
         }
     }, [mapRef]);
 
@@ -43,7 +38,7 @@ const ZoomLevelDisplay: React.FC<ZoomLevelDisplayProps> = ({ mapRef, initialView
             className="flex justify-between items-center bg-white text-black text-center text-base border-2 border-black rounded-lg w-64 mx-auto px-2 py-1"
             style={{ boxShadow: `20px 20px 15px rgb(0 0 0 / 0.5)` }}
         >
-            <div className="">
+            <div>
                 Zoom Level: {zoomLevel.toFixed(2)}
             </div>
 
@@ -54,7 +49,7 @@ const ZoomLevelDisplay: React.FC<ZoomLevelDisplayProps> = ({ mapRef, initialView
                         mapRef.current.flyTo({
                             center: [initialViewState.longitude, initialViewState.latitude],
                             zoom: initialViewState.zoom,
-                            duration: 4000
+                            duration: 4000,
                         });
                     }
                 }}

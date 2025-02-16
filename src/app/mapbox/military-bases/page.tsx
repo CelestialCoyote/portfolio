@@ -8,11 +8,11 @@ export const metadata = {
     description: "Housing allowance rates for 2025 by zip code."
 }
 
-const MilitaryBases = async () => {
+const MilitaryBases: React.FC = () => {
     return (
-        <main className="w-full h-[calc(100vh-96px)] p-[1%]">
+        <main className="flex flex-col w-full h-[calc(100vh-96px)] p-[1%]">
             <Title
-                title="US Military Base"
+                title="US Military Bases"
                 description={
                     <div>
                         <p>This map displays current military installations in the U.S.</p>
@@ -22,7 +22,7 @@ const MilitaryBases = async () => {
                 }
             />
 
-            <div className="h-[93%] max-h-[93%]">
+            <div className="flex-1 min-h-0">
                 <MilitaryBasesMap />
             </div>
         </main>

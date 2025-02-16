@@ -5,38 +5,29 @@ import Map, { Layer, MapRef, Marker, Popup, Source } from "react-map-gl";
 import { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../_mapbox-components/map-popup.css";
-import { InitialViewState } from "../_mapbox-components/types/initialViewState";
+import { initialViewState } from "./_earthquake-utils/initalViewState";
 import { Earthquake, FeatureCollection } from "./types/earthquakeTypes";
 import { getColorByMagnitude } from "./_earthquake-utils/getColorByMagnitude";
 import { filterEarthquakesByDay } from "./_earthquake-utils/filterEarthQuakesByDay";
 import { formatTimestamp } from "./_earthquake-utils/formatTimeStamp";
-import PlateBoundaries from "./_earthquake-components/Tectonic_Plates.json";
+import PlateBoundaries from "./_earthquake-components/PB2002_boundaries.json";
+// import PlateBoundaries from "./_earthquake-components/PB2002_plates.json";
 import EarthquakeControlPanel from "./_earthquake-components/EarthquakeControlPanel";
 import DraggablePopup from "../_mapbox-components/DraggablePopup";
-// import Skeleton from "../map-skeleton";
+import GridLines from "../_mapbox-components/GridLinesGlobe";
 
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-const initialViewState: InitialViewState = {
-    longitude: -98.583333,
-    latitude: 39.833333,
-    projection: "globe",
-    zoom: 3.5,
-    minZoom: 2.5,
-    maxZoom: 18,
-}
-
-
 const EarthquakesMap: React.FC = () => {
     const mapRef = useRef<MapRef>(null);
-    // const [loading, setLoading] = useState(true);
     const [earthquakes, setEarthquakes] = useState<FeatureCollection | null>(null);
     const [selectedEarthquake, setSelectedEarthquake] = useState<Earthquake | null>(null);
     const [hoveredEarthquake, setHoveredEarthquake] = useState<Earthquake | null>(null);
     const [allDays, setAllDays] = useState(true);
     const [timeRange, setTimeRange] = useState<[number, number]>([0, 0]);
     const [selectedTime, setSelectedTime] = useState(0);
+    const [mapLoaded, setMapLoaded] = useState(false);
 
     useEffect(() => {
         const fetchEarthquakeData = async () => {
@@ -65,7 +56,7 @@ const EarthquakesMap: React.FC = () => {
             } catch (error) {
                 console.error("Error fetching earthquake data:", error);
             }
-        };
+        }
 
         fetchEarthquakeData();
     }, []);
@@ -75,6 +66,7 @@ const EarthquakesMap: React.FC = () => {
 
         return allDays ? earthquakes : filterEarthquakesByDay(earthquakes, selectedTime);
     }, [earthquakes, allDays, selectedTime]);
+
 
     if (!mapboxToken) {
         console.error("Mapbox token is missing. Check your environment variables.");
@@ -86,16 +78,14 @@ const EarthquakesMap: React.FC = () => {
     }
 
     return (
-        <div className="w-full h-full max-h-full">
-            {/* {loading && <Skeleton message="Loading earthquakes map..." />} */}
-
+        <div className="flex flex-grow w-full h-full max-h-full">
             <Map
+                ref={mapRef}
                 initialViewState={initialViewState}
                 mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
                 mapboxAccessToken={mapboxToken}
-                ref={mapRef}
                 style={{ borderRadius: 8 }}
-                // onLoad={() => setLoading(false)}
+                onLoad={() => setMapLoaded(true)}
             >
                 <Source id="tectonic-plates-source" type="geojson" data={PlateBoundaries}>
                     <Layer
@@ -108,12 +98,13 @@ const EarthquakesMap: React.FC = () => {
                     />
                 </Source>
 
-                {data &&
+                {mapLoaded && data &&
                     data.features.map((quake) => (
                         <Marker
                             key={quake.id}
                             longitude={quake.geometry.coordinates[0]}
                             latitude={quake.geometry.coordinates[1]}
+                            pitchAlignment="auto"
                             onClick={() => setSelectedEarthquake(quake)}
                         >
                             <div
@@ -129,7 +120,8 @@ const EarthquakesMap: React.FC = () => {
                                 onMouseLeave={() => setHoveredEarthquake(null)}
                             ></div>
                         </Marker>
-                    ))}
+                    ))
+                }
 
                 {/* Hover Popup */}
                 {hoveredEarthquake && !selectedEarthquake && (
@@ -212,8 +204,7 @@ const EarthquakesMap: React.FC = () => {
                 <GeolocateControl position="bottom-right" />
                 <NavigationControl position="bottom-right" />
 
-                {/* <div className="absolute top-4 right-4"> */}
-                <div className="absolute top-4 right-4 md:bottom-4 md:right-auto md:left-4">
+                <div className="absolute top-4 right-4 md:bottom-4">
                     <EarthquakeControlPanel
                         startTime={timeRange[0]}
                         endTime={timeRange[1]}
@@ -223,6 +214,8 @@ const EarthquakesMap: React.FC = () => {
                         onChangeAllDays={setAllDays}
                     />
                 </div>
+
+                <GridLines mapRef={mapRef} interval={5} visible={true} />
             </Map>
         </div>
     );
