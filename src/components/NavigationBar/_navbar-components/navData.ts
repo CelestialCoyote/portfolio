@@ -19,8 +19,13 @@ export const navData = [
 				label: "Earthquakes",
 				link: "/mapbox/earthquakes"
 			},
+			// {
+			// 	id: 1,
+			// 	label: "U.S Boundaries",
+			// 	link: "/mapbox/us-boundary-zones"
+			// },
 			{
-				id: 1,
+				id: 2,
 				label: "Military Bases",
 				link: "/mapbox/military-bases"
 			},
@@ -48,11 +53,11 @@ export const navData = [
 				label: "Spiral Shader",
 				link: "/threejs/spiral"
 			},
-			// {
-			// 	id: 3,
-			// 	label: "3D Spiral",
-			// 	link: "/threejs/spiral-3d"
-			// },
+			{
+				id: 3,
+				label: "Abstract Generator",
+				link: "/threejs/abstract-generator"
+			},
 		],
 	},
 ];
