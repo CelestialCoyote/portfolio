@@ -1,5 +1,5 @@
 import React from "react";
-import Title from "../_mapbox-components/TitleDescription";
+import TitleDescription from "@/components/TitleDescription/TitleDescription";
 import MilitaryBasesMap from "./MilitaryBasesMap";
 
 
@@ -11,7 +11,7 @@ export const metadata = {
 const MilitaryBases: React.FC = () => {
     return (
         <main className="flex flex-col w-full h-[calc(100vh-96px)] p-[1%]">
-            <Title
+            <TitleDescription
                 title="US Military Bases"
                 description={
                     <div>

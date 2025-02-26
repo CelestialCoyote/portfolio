@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import EarthquakesMap from "./EarthquakesMap";
-import Title from "../_mapbox-components/TitleDescription";
+import TitleDescription from "@/components/TitleDescription/TitleDescription";
 
 
 export const metadata = {
@@ -12,7 +12,7 @@ export const metadata = {
 const Earthquakes = async () => {
     return (
         <main className="flex flex-col w-full h-[calc(100vh-96px)] p-[1%]">
-            <Title
+            <TitleDescription
                 title="Earthquakes Map"
                 description={
                     <div>
