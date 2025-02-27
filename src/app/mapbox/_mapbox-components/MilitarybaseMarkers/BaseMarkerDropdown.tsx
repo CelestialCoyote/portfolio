@@ -4,35 +4,11 @@ import BaseMarker from "./BaseMarker";
 import BaseMarkerControlDropdown from "./BaseMarkerControlDropdown";
 import markers from "./us-military-base-markers.json";
 import styles from "./map-popup.module.css";
-
+import { GeoJSONFeature, GeoJSONData } from "./_types/geojson";
 
 type SelectMapStyleProps = {
     mapRef: React.RefObject<MapRef | null>;
-}
-
-type GeoJSONFeature = {
-    type: "Feature";
-    properties: {
-        installation: string;
-        branch: string;
-        state: string;
-        jointBase: boolean | null;
-        locationLat: string;
-        locationLong: string;
-        STATEFP: string;
-        NAME: string;
-        STUSPS: string;
-        zip_codes: string[];
-    }
-    geometry: {
-        type: "Point";
-        coordinates: [number, number]; // Ensures exactly two elements.
-    }
-}
-
-type GeoJSONData = {
-    type: "FeatureCollection";
-    features: GeoJSONFeature[];
+    setSelectedBase: (base: GeoJSONFeature) => void;
 }
 
 type MarkerGroup = {
@@ -69,7 +45,7 @@ const branchData: BranchInfo[] = [
     { id: "space-force", branch: "Space Force", color: "#009EE0" },
 ];
 
-const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
+const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef, setSelectedBase }) => {
     const [hoveredBase, setHoveredBase] = useState<GeoJSONFeature | null>(null);
 
     const [markerVisibility, setMarkerVisibility] = useState<MarkerVisibility>({
@@ -131,14 +107,12 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
                     <BaseMarker
                         key={branchKey}
                         mapRef={mapRef}
-                        // data={{ features: branchMarkerArray }}
                         data={{
                             type: "FeatureCollection", // Required by GeoJSONData
                             features: branchMarkerArray, // Your features array
                         }}
                         imagePath={branchImages[branchKey]}
-                        setSelectedBase={() => { }} // Placeholder, remove or implement if needed
-                        // setSelectedArea={setSelectedArea}
+                        setSelectedBase={setSelectedBase}
                         setHoveredBase={setHoveredBase}
                     />
                 );
@@ -161,7 +135,7 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef }) => {
                                     ?.color || "#0000FF",
                         }}
                     >
-                        Selected Base
+                        Installation Info
                     </h3>
 
                     <div className="flex flex-col bg-slate-200 text-black px-2 py-1">

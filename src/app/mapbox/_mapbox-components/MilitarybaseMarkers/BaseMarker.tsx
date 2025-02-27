@@ -1,45 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import { MapRef, Marker } from "react-map-gl";
+import { GeoJSONFeature, GeoJSONData } from "./_types/geojson";
 
-
-type Properties = {
-	installation: string;
-	branch: string;
-	state: string;
-	jointBase: boolean | null;
-	locationLat: string;
-	locationLong: string;
-	STATEFP: string;
-	NAME: string;
-	STUSPS: string;
-	zip_codes: string[];
-};
-
-// Define the types for the GeoJSON data and its structure
-type Geometry = {
-	type: "Point";
-	coordinates: [number, number];
-}
-
-type Feature = {
-	type: "Feature";
-	geometry: Geometry;
-	properties: Properties;
-}
-
-type GeoJSONData = {
-	type: "FeatureCollection";
-	features: Feature[];
-}
 
 // Props type definition for BaseMarker component
 type BaseMarkerProps = {
 	mapRef: React.RefObject<MapRef | null>;
 	data: GeoJSONData;
 	imagePath: string;
-	setSelectedBase: (base: Feature) => void;
-	setHoveredBase: (base: Feature | null) => void;
+	setSelectedBase: (base: GeoJSONFeature) => void;
+	setHoveredBase: (base: GeoJSONFeature | null) => void;
 }
 
 const BaseMarker: React.FC<BaseMarkerProps> = ({
@@ -47,12 +18,11 @@ const BaseMarker: React.FC<BaseMarkerProps> = ({
 	data,
 	imagePath,
 	setSelectedBase,
-	// setSelectedArea,
 	setHoveredBase,
 }) => {
 	return (
 		<>
-			{data?.features?.map((base: Feature, index: number) => (
+			{data?.features?.map((base: GeoJSONFeature, index: number) => (
 				<Marker
 					key={index}
 					latitude={base.geometry.coordinates[1]}
