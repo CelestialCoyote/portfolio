@@ -6,6 +6,7 @@ import markers from "./us-military-base-markers.json";
 import styles from "./map-popup.module.css";
 import { GeoJSONFeature, GeoJSONData } from "./_types/geojson";
 
+
 type SelectMapStyleProps = {
     mapRef: React.RefObject<MapRef | null>;
     setSelectedBase: (base: GeoJSONFeature) => void;
@@ -159,6 +160,6 @@ const BaseMarkerDropdown: React.FC<SelectMapStyleProps> = ({ mapRef, setSelected
             />
         </>
     );
-};
+}
 
 export default BaseMarkerDropdown;
