@@ -19,11 +19,11 @@ export const navData = [
 				label: "Earthquakes",
 				link: "/mapbox/earthquakes"
 			},
-			// {
-			// 	id: 1,
-			// 	label: "U.S Boundaries",
-			// 	link: "/mapbox/us-boundary-zones"
-			// },
+			{
+				id: 1,
+				label: "U.S Boundaries",
+				link: "/mapbox/hover-map"
+			},
 			{
 				id: 2,
 				label: "Military Bases",
