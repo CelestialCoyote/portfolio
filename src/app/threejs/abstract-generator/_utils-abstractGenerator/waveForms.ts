@@ -10,39 +10,21 @@ export const waveTypes = {
     CORAMP: "coramp"
 } as const;
 
-// Create a TypeScript type for waveTypes
-export type WaveType = typeof waveTypes[keyof typeof waveTypes];
 
 /*
  * Generate Different Waveforms
  */
-export function getWaveForm(
-    type: WaveType, 
-    x: number, 
-    frequency: number, 
-    amplitude: number, 
-    time: number
-): number {
-    const t = x * frequency + time;
+// Define a type alias for a waveform function
+type WaveformFunction = (t: number) => number;
 
-    switch (type) {
-        case waveTypes.SINE:
-            return amplitude * Math.sin(t * Math.PI);
-        case waveTypes.COSINE:
-            return amplitude * Math.cos(t * Math.PI);
-        case waveTypes.SQUARE:
-            return amplitude * (Math.sin(t * Math.PI) >= 0 ? 1 : -1);
-        case waveTypes.COSQUARE:
-            return amplitude * (Math.cos(t * Math.PI) >= 0 ? 1 : -1);
-        case waveTypes.TRIANGLE:
-            return amplitude * (2 / Math.PI) * Math.asin(Math.sin(t * Math.PI));
-        case waveTypes.COTRIANGLE:
-            return amplitude * (2 / Math.PI) * Math.asin(Math.cos(t * Math.PI));
-        case waveTypes.RAMP:
-            return amplitude * (2 * (t - Math.floor(t + 0.5)));
-        case waveTypes.CORAMP:
-            return -amplitude * (2 * (t - Math.floor(t + 0.5)));
-        default:
-            return 0;
-    }
+// Define the waveforms object with proper types
+export const waveforms: Record<string, WaveformFunction> = {
+    sine: (t) => Math.sin(t),
+    cosine: (t) => Math.cos(t),
+    triangle: (t) => 2 * Math.abs(2 * (t / (2 * Math.PI) - Math.floor(t / (2 * Math.PI) + 0.5))) - 1,
+    cotriangle: (t) => 1 - 4 * Math.abs(Math.round(t / (2 * Math.PI)) - t / (2 * Math.PI)),
+    square: (t) => Math.sign(Math.sin(t)),
+    cosquare: (t) => Math.sign(Math.cos(t)),
+    ramp: (t) => (t / (2 * Math.PI)) % 1,
+    coramp: (t) => 1 - (t / (2 * Math.PI)) % 1,
 }
