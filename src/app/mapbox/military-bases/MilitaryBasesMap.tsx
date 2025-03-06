@@ -25,14 +25,34 @@ import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-s
 const MilitaryBasesMap: React.FC = () => {
     const mapRef = useRef<MapRef>(null);
     const [loading, setLoading] = useState(true);
+    const [mhaData, setMHAData] = useState([]);
     const [selectedBase, setSelectedBase] = useState<GeoJSONFeature | null>(null);
-    const { zipHoverInfo, onZipHover } = useZipHover();
+    const { zipHoverInfo, onZipHover } = useZipHover(mhaData);
     const [isHoveringControl, setIsHoveringControl] = useState(false);
+    
 
 
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1);
-        return () => clearTimeout(timer);
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/mha-2025");
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const jsonData = await response.json();
+
+                // console.log("Fetched Data:", jsonData);
+                setMHAData(jsonData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, []);
 
 
@@ -69,7 +89,10 @@ const MilitaryBasesMap: React.FC = () => {
                         onMouseEnter={() => { setIsHoveringControl(true); }}
                         onMouseLeave={() => setIsHoveringControl(false)}
                     >
-                        <ZoomLevelDisplay mapRef={mapRef} initialViewState={initialViewState} />
+                        <ZoomLevelDisplay
+                            mapRef={mapRef}
+                            initialViewState={initialViewState}
+                        />
                     </div>
 
                     <div

@@ -33,7 +33,14 @@ if (process.env.NODE_ENV === "development") {
         client = new MongoClient(uri);
         // Initialize the connection and store the promise in the `_mongoClientPromise` property
         // on the global object. This ensures the client is reused across hot-reloads.
-        globalWithMongo._mongoClientPromise = client.connect();
+        // globalWithMongo._mongoClientPromise = client.connect();
+        globalWithMongo._mongoClientPromise = client.connect().then(client => {
+            console.log("✅ Connected to MongoDB");
+            return client;
+        }).catch(err => {
+            console.error("❌ MongoDB connection error:", err);
+            throw err;
+        });
     }
     // Assign the stored promise to `clientPromise` for use in the app.
     clientPromise = globalWithMongo._mongoClientPromise;
@@ -42,7 +49,14 @@ if (process.env.NODE_ENV === "development") {
     // Create a new instance of MongoClient with the connection URI and any provided options.
     client = new MongoClient(uri, options);
     // Connect to the database and assign the promise to `clientPromise`.
-    clientPromise = client.connect();
+    // clientPromise = client.connect();
+    clientPromise = client.connect().then(client => {
+        console.log("✅ Connected to MongoDB");
+        return client;
+    }).catch(err => {
+        console.error("❌ MongoDB connection error:", err);
+        throw err;
+    });
 }
 
 export default clientPromise;

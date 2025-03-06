@@ -6,7 +6,8 @@ type ZipHoverInfo = {
     longitude: number;
     latitude: number;
     ID?: string;
-    ZCTA?: string,
+    ZCTA?: string;
+    mha_name?: string;
 } | null;
 
 type ZipLayersProps = {
@@ -71,6 +72,10 @@ const ZipLayers: React.FC<ZipLayersProps> = ({ zipHoverInfo }) => {
                         <div className="flex flex-col bg-slate-200 text-black rounded-b-lg px-2 py-1">
                             <p className="text-center font-bold">
                                 {zipHoverInfo.ZCTA}
+                            </p>
+
+                            <p className="text-center font-bold">
+                                {zipHoverInfo.mha_name}
                             </p>
                         </div>
                     </div>
