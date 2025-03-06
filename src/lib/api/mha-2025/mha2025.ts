@@ -6,7 +6,7 @@ export async function getMHA2025() {
         const client = await clientPromise;
         console.log("Database client initialized");
 
-        const dbName = process.env.MONGO_DB;
+        const dbName = process.env.MONGODB_DB;
         if (!dbName) {
             throw new Error("MONGO_DB environment variable is not set.");
         }

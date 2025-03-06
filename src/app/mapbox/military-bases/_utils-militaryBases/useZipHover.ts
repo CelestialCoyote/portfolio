@@ -29,7 +29,7 @@ export const useZipHover = (mhaData: MHAData) => {
                 mha.zip_codes.includes(hoveredZCTA)
             );
 
-            console.log(matchedMHA)
+            // console.log(matchedMHA);
 
             if (matchedMHA) {
                 setZipHoverInfo({

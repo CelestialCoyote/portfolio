@@ -6,7 +6,7 @@ export async function GET() {
     try {
         const result = await getMHA2025();
 
-        console.log(`fetching from GET": ${result}`)
+        // console.log(`fetching from GET": ${result}`);
 
         return NextResponse.json(result, { status: 200 });
     } catch (error: unknown) {
