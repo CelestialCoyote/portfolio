@@ -8,6 +8,7 @@ type ZipHoverInfo = {
     ID?: string;
     ZCTA?: string;
     mha_name?: string;
+    mha?: string;
 } | null;
 
 type ZipLayersProps = {
@@ -64,17 +65,21 @@ const ZipLayers: React.FC<ZipLayersProps> = ({ zipHoverInfo }) => {
                     closeButton={false}
                     closeOnClick={false}
                 >
-                    <div className="w-[128px]">
-                        <h3 className="text-black text-center">
-                            Zip Code:
+                    <div className="w-[172px]">
+                        <h3 className="text-black text-center text-[14px] font-bold">
+                            Housing Allowance Info
                         </h3>
 
                         <div className="flex flex-col bg-slate-200 text-black rounded-b-lg px-2 py-1">
                             <p className="text-center font-bold">
-                                {zipHoverInfo.ZCTA}
+                                Zip Code:<span className="font-normal ml-1">{zipHoverInfo.ZCTA}</span>
                             </p>
 
                             <p className="text-center font-bold">
+                                MHA ID:<span className="font-normal ml-1">{zipHoverInfo.mha}</span>
+                            </p>
+
+                            <p className="">
                                 {zipHoverInfo.mha_name}
                             </p>
                         </div>

@@ -1,22 +1,38 @@
 import { useState, useCallback } from "react";
 import { MapMouseEvent } from "react-map-gl";
 
+
 type ZipHoverInfo = {
     longitude: number;
     latitude: number;
     ID?: string;
     ZCTA?: string;
     mha_name?: string;
+    mha?: string;
+} | null;
+
+type BahData = {
+    [key: string]: [number | "NULL", number | "NULL"]; // Each pay grade has an array of two values
+}
+
+type ZipClickedInfo = {
+    ZCTA?: string;
+    mha_name?: string;
+    mha?: string;
+    bah?: BahData[];
 } | null;
 
 type MHAData = {
     mha: string;
     mha_name: string;
+    bah?: BahData[];
     zip_codes: string[];
 }[];
 
+
 export const useZipHover = (mhaData: MHAData) => {
     const [zipHoverInfo, setZipHoverInfo] = useState<ZipHoverInfo>(null);
+    const [zipClickedInfo, setZipClickedInfo] = useState<ZipClickedInfo>(null);
 
     const onZipHover = useCallback((event: MapMouseEvent) => {
         const zipCode = event.features && event.features[0];
@@ -29,8 +45,6 @@ export const useZipHover = (mhaData: MHAData) => {
                 mha.zip_codes.includes(hoveredZCTA)
             );
 
-            // console.log(matchedMHA);
-
             if (matchedMHA) {
                 setZipHoverInfo({
                     longitude: event.lngLat.lng,
@@ -38,6 +52,7 @@ export const useZipHover = (mhaData: MHAData) => {
                     ID: zipCode.properties?.GEOID20,
                     ZCTA: hoveredZCTA,
                     mha_name: matchedMHA.mha_name,
+                    mha: matchedMHA.mha,
                 });
             } else {
                 setZipHoverInfo({
@@ -52,43 +67,27 @@ export const useZipHover = (mhaData: MHAData) => {
         }
     }, [mhaData]);
 
-    return { zipHoverInfo, onZipHover };
-};
+    const onZipClick = useCallback((event: MapMouseEvent) => {
+        const zipCode = event.features && event.features[0];
 
+        if (zipCode) {
+            const clickedZCTA = zipCode.properties?.ZCTA5CE20;
 
+            // Find the corresponding MHA data based on the hovered ZCTA
+            const matchedMHA = mhaData.find((mha) =>
+                mha.zip_codes.includes(clickedZCTA)
+            );
 
+            if (matchedMHA) {
+                setZipClickedInfo({
+                    ZCTA: clickedZCTA,
+                    mha_name: matchedMHA.mha_name,
+                    mha: matchedMHA.mha,
+                    bah: matchedMHA.bah
+                });
+            }
+        }
+    }, [mhaData]);
 
-
-
-// import { useState, useCallback } from "react";
-// import { MapMouseEvent } from "react-map-gl";
-
-
-// type ZipHoverInfo = {
-//     longitude: number;
-//     latitude: number;
-//     ID?: string,
-//     ZCTA?: string,
-// } | null;
-
-
-// export const useZipHover = () => {
-//     const [zipHoverInfo, setZipHoverInfo] = useState<ZipHoverInfo>(null);
-
-//     const onZipHover = useCallback((event: MapMouseEvent) => {
-//         const zipCode = event.features && event.features[0];
-
-//         if (zipCode) {
-//             setZipHoverInfo({
-//                 longitude: event.lngLat.lng,
-//                 latitude: event.lngLat.lat,
-//                 ID: zipCode.properties?.GEOID20,
-//                 ZCTA: zipCode.properties?.ZCTA5CE20,
-//             });
-//         } else {
-//             setZipHoverInfo(null);
-//         }
-//     }, []);
-
-//     return { zipHoverInfo, onZipHover };
-// }
+    return { zipHoverInfo, onZipHover, onZipClick, zipClickedInfo, setZipClickedInfo };
+}
