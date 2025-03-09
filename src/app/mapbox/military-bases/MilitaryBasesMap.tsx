@@ -139,7 +139,7 @@ const MilitaryBasesMap: React.FC = () => {
                             onMouseEnter={() => setIsHoveringControl(true)}
                             onMouseLeave={() => setIsHoveringControl(false)}
                         >
-                            <DraggablePopup xPos={20} yPos={580}>
+                            <DraggablePopup xPos={20} yPos={500}>
                                 <BAH
                                     zipClickedInfo={zipClickedInfo}
                                     setZipClickedInfo={setZipClickedInfo}
