@@ -1,36 +1,9 @@
 import { useState, useCallback } from "react";
 import { MapMouseEvent } from "react-map-gl";
+import { MHAData, ZipClickedInfo, ZipHoverInfo } from "../_types-militaryBases/militaryBasesTypes"
 
 
-type ZipHoverInfo = {
-    longitude: number;
-    latitude: number;
-    ID?: string;
-    ZCTA?: string;
-    mha_name?: string;
-    mha?: string;
-} | null;
-
-type BahData = {
-    [key: string]: [number | "NULL", number | "NULL"]; // Each pay grade has an array of two values
-}
-
-type ZipClickedInfo = {
-    ZCTA?: string;
-    mha_name?: string;
-    mha?: string;
-    bah?: BahData[];
-} | null;
-
-type MHAData = {
-    mha: string;
-    mha_name: string;
-    bah?: BahData[];
-    zip_codes: string[];
-}[];
-
-
-export const useZipHover = (mhaData: MHAData) => {
+export const useZipEvents = (mhaData: MHAData) => {
     const [zipHoverInfo, setZipHoverInfo] = useState<ZipHoverInfo>(null);
     const [zipClickedInfo, setZipClickedInfo] = useState<ZipClickedInfo>(null);
 

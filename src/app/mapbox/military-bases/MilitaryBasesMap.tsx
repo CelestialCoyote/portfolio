@@ -5,38 +5,29 @@ import Map, { Layer, MapRef, Source } from "react-map-gl";
 import { GeolocateControl, NavigationControl, ScaleControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "../_mapbox-components/map-popup.css";
-
 import { mapboxToken } from "../_mapbox-components/mapboxToken";
 import { initialViewState } from "./_utils-militaryBases/initialViewState";
 import { GeoJSONFeature } from "../_mapbox-components/MilitarybaseMarkers/_types/geojson";
 import MapCircles from "../_mapbox-components/MapCircles/MapCircles";
 import ZipLayers from "./_components-militaryBases/ZipCodeLayers";
-import { useZipHover } from "./_utils-militaryBases/useZipHover";
+import { useZipEvents } from "./_utils-militaryBases/useZipEvents";
 import DraggablePopup from "../_mapbox-components/DraggablePopup";
 import ZoomLevelDisplay from "../_mapbox-components/ZoomLevelDisplay";
 import MercatorGridLines from "../_mapbox-components/GridLinesMercator/MercatorGridLines";
 import SelectMapStyleDropdown from "../_mapbox-components/SelectMapStyleDropdown";
 import BaseMarkerDropdown from "../_mapbox-components/MilitarybaseMarkers/BaseMarkerDropdown";
 import { basesFill } from "../_mapbox-components/MilitarybaseMarkers/base-fill-style";
+import BAH from "./_components-militaryBases/BAH";
 import Skeleton from "../map-skeleton";
-import PayGradeDropdown from "./_components-militaryBases/PaygradeDropdown";
 
 
 const MilitaryBasesMap: React.FC = () => {
     const mapRef = useRef<MapRef>(null);
     const [loading, setLoading] = useState(true);
     const [mhaData, setMHAData] = useState([]);
-    const [payGrade, setPayGrade] = useState("E05");
     const [selectedBase, setSelectedBase] = useState<GeoJSONFeature | null>(null);
     const [isHoveringControl, setIsHoveringControl] = useState(false);
-    const { zipHoverInfo, onZipHover, onZipClick, zipClickedInfo, setZipClickedInfo } = useZipHover(mhaData);
-
-
-    // Set currency format.
-    const USDollar = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
+    const { zipHoverInfo, onZipHover, onZipClick, zipClickedInfo, setZipClickedInfo } = useZipEvents(mhaData);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -148,90 +139,11 @@ const MilitaryBasesMap: React.FC = () => {
                             onMouseEnter={() => setIsHoveringControl(true)}
                             onMouseLeave={() => setIsHoveringControl(false)}
                         >
-                            <DraggablePopup xPos={20} yPos={500}>
-                                <div
-                                    className="absolute bg-white w-[260px] rounded-lg border-2 border-black p-2 cursor-move"
-                                    style={{ boxShadow: `20px 20px 15px rgb(0 0 0 / 0.5)` }}
-                                >
-                                    <p
-                                        className="absolute top-[-12px] right-[-12px] flex items-center justify-center bg-white text-black
-                                        w-[25px] h-[25px] border-2 border-gray-500 rounded-full hover:bg-slate-300 hover:text-black cursor-pointer"
-                                        onClick={() => setZipClickedInfo(null)}
-                                    >
-                                        ✖
-                                    </p>
-
-                                    <div className="flex flex-col text-black p-1">
-                                        <h2 className="text-[16px] font-semibold mb-2 border-b-2 border-black pb-2">
-                                            Basic Allowance for Housing:
-                                        </h2>
-                                        
-                                        <div className="mb-4">
-                                            <h3 className="text-[14px] font-semibold mb-1">
-                                                Select Pay Grade:
-                                            </h3>
-
-                                            <PayGradeDropdown
-                                                selectedOption={payGrade}
-                                                setSelectedOption={setPayGrade}
-                                            />
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <p className="font-semibold">Zip Code:</p>
-                                            <p>{zipClickedInfo.ZCTA}</p>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <p className="font-semibold">MHA Code:</p>
-                                            <p>{zipClickedInfo.mha}</p>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <p className="font-semibold">MHA Name:</p>
-                                            <p>{zipClickedInfo.mha_name}</p>
-                                        </div>
-
-                                        <p className="font-semibold mb-1 border-b-[1px] border-black pb-1">
-                                            Rates:
-                                        </p>
-
-                                        <div className="flex flex-col px-3">
-                                            {zipClickedInfo.bah && (
-                                                (() => {
-                                                    const bahEntry = zipClickedInfo.bah.find(entry => entry[payGrade]); // Search for the pay grade
-                                                    const bahValues = bahEntry ? bahEntry[payGrade] : undefined; // Get the values
-
-                                                    if (!bahValues) {
-                                                        return <p className="text-red-500">No BAH data available for this pay grade</p>;
-                                                    }
-
-                                                    return (
-                                                        <>
-                                                            <div className="flex justify-between">
-                                                                <p className="font-semibold">With Dependents:</p>
-                                                                <p>
-                                                                    {bahValues[0] !== "NULL"
-                                                                        ? USDollar.format(bahValues[0] as number)
-                                                                        : ""}
-                                                                </p>
-                                                            </div>
-
-                                                            <div className="flex justify-between">
-                                                                <p className="font-semibold">Without Dependents:</p>
-                                                                <p>
-                                                                    {bahValues[1] !== "NULL"
-                                                                        ? USDollar.format(bahValues[1] as number)
-                                                                        : ""}
-                                                                </p>
-                                                            </div>
-                                                        </>
-                                                    );
-                                                })()
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
+                            <DraggablePopup xPos={20} yPos={580}>
+                                <BAH
+                                    zipClickedInfo={zipClickedInfo}
+                                    setZipClickedInfo={setZipClickedInfo}
+                                />
                             </DraggablePopup>
                         </div>
                     )}
