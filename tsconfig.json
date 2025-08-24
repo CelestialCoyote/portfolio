@@ -33,6 +33,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "src/global.d.ts",
     "src/vite-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
